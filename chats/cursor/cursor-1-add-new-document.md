@@ -21,7 +21,7 @@ Now let me check if there are any existing docs in subdirectories to understand 
 
 Now I'll create the new `val-town.mdx` file with the requested content:
 
-```markdown
+"""markdown
 ---
 title: "Val Town"
 description: "Collection of vals and web applications built on Val Town platform"
@@ -37,9 +37,9 @@ description: "Collection of vals and web applications built on Val Town platform
 
 A note-taking application built with Val Town for quick summer project notes and documentation.
 
-```bash
+"""bash
 cd ~/Developer/local/vt-cli/summer-notes-v1/
-```
+"""
 
 <CardGroup cols={2}>
   <Card title="Val Town Code" icon="code" href="https://www.val.town/x/arfan/summer-notes-v1">
@@ -49,13 +49,13 @@ cd ~/Developer/local/vt-cli/summer-notes-v1/
     Access the deployed summer notes application
   </Card>
 </CardGroup>
-```
+"""
 
 Now I need to update the `docs.json` file to add the new "web-dev" section with the val-town page. Let me check the current navigation structure:
 
 Now I'll update the `docs.json` file to add the new "web-dev" section with the val-town page. I'll add it to the "Guides" tab:
 
-```json
+"""json
           {
             "group": "Essentials",
             "pages": [
@@ -87,7 +87,7 @@ Now I'll update the `docs.json` file to add the new "web-dev" section with the v
               "val-town"
             ]
           }
-```
+"""
 
 Perfect! I've successfully created the new Val Town documentation page and added it to the sidebar. Here's what I've done:
 
@@ -139,7 +139,7 @@ Here's what I found from the Mintlify documentation:
 
 Let me create a custom React component for you:
 
-```javascript
+"""javascript
 export const CodeRunner = ({ code, language = "bash", filename }) => {
   const copyToClipboard = async (text) => {
     try {
@@ -229,11 +229,11 @@ export const CodeRunner = ({ code, language = "bash", filename }) => {
     </div>
   );
 };
-```
+"""
 
 Now let me update your `val-town.mdx` file to use this custom component:
 
-```markdown
+"""markdown
 ---
 title: "Val Town"
 description: "Collection of vals and web applications built on Val Town platform"
@@ -249,16 +249,16 @@ description: "Collection of vals and web applications built on Val Town platform
 
 A note-taking application built with Val Town for quick summer project notes and documentation.
 
-```bash
+"""bash
 cd ~/Developer/local/vt-cli/summer-notes-v1/
-```
+"""
 
-```bash clone.sh
+"""bash clone.sh
 cd ~/Developer/local/vt-cli/
 vt clone https://www.val.town/x/arfan/summer-notes-v1
 cd ~/Developer/local/vt-cli/summer-notes-v1/
 vt status
-```
+"""
 
 ->
 
@@ -292,7 +292,7 @@ vt status`}
   language="bash"
   filename="clone.sh"
 />
-```
+"""
 
 Perfect! I've created a solution for you. Here's what I implemented:
 
@@ -324,13 +324,13 @@ Perfect! I've created a solution for you. Here's what I implemented:
 
 ### Usage
 
-```jsx
+"""jsx
 <CodeRunner 
   code="your command here"
   language="bash"
   filename="optional-filename.sh"
 />
-```
+"""
 
 The component now provides exactly what you wanted:
 - ✅ Copy functionality 
@@ -340,11 +340,11 @@ The component now provides exactly what you wanted:
 
 This approach works within Mintlify's framework while giving you the custom functionality you need!
 
-```javascriptreact
+"""javascriptreact
 <CodeRunner 
   code="your command here"
   language="bash"
   filename="optional-filename.sh"
 />
-```
+"""
 

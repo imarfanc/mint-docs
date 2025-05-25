@@ -8,9 +8,6 @@
     "dark": "#0D9373"
   },
   "favicon": "/favicon.svg",
-  "icons": {
-    "library": "lucide"
-  },
   "navigation": {
     "dropdowns": [
       {
@@ -48,7 +45,6 @@
               "group": "cursor",
               "icon": "chart-no-axes-combined",
               "pages": [
-                "chats/cursor/test/cursor1",
                 "chats/cursor/cursor-1-add-new-document",
                 "chats/cursor/cursor-2-mintlify-framework",
                 "chats/cursor/cursor-3-design-enhancements",
