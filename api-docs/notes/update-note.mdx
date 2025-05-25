@@ -1,0 +1,173 @@
+---
+title: 'Update Note'
+api: 'PUT https://arfan-notes.val.run/api/notes/:id'
+description: 'Update an existing note by ID'
+---
+
+# Update Note
+
+Update an existing note by providing its ID and the fields you want to modify. All fields except ID are optional.
+
+## Path Parameters
+
+<ParamField path="id" type="integer" required>
+  The unique identifier of the note to update
+</ParamField>
+
+## Request Body
+
+<ParamField body="id" type="integer" required>
+  The ID of the note (must match the path parameter)
+</ParamField>
+
+<ParamField body="title" type="string" optional>
+  The new title of the note
+</ParamField>
+
+<ParamField body="content" type="string" optional>
+  The new content/body of the note
+</ParamField>
+
+<ParamField body="category" type="string" optional>
+  New category classification. Valid values: `css`, `val-town`, `prompts`, `notes`, `chat-gpt`, `cursor-chats`, `bash-commands`
+</ParamField>
+
+<ParamField body="group" type="string" optional>
+  New group classification. Valid values: `first`, `second`, `third`, `fourth`, `fifth`
+</ParamField>
+
+<ParamField body="color" type="string" optional>
+  New visual color coding. Valid values: `primary`, `secondary`, `accent`, `neutral`, `info`, `success`, `warning`, `error`
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+```bash Update Title Only
+curl -X PUT "https://arfan-notes.val.run/api/notes/23" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "id": 23,
+    "title": "Updated CSS Techniques"
+  }'
+```
+
+```bash Update Multiple Fields
+curl -X PUT "https://arfan-notes.val.run/api/notes/23" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "id": 23,
+    "title": "Advanced CSS and Flexbox",
+    "content": "Updated content with more details about Flexbox...",
+    "color": "success"
+  }'
+```
+
+```javascript JavaScript
+const noteId = 23;
+const updates = {
+  id: noteId,
+  title: "Advanced CSS and Flexbox",
+  content: "Updated content with more details about Flexbox and modern layout techniques...",
+  color: "success"
+};
+
+const response = await fetch(`https://arfan-notes.val.run/api/notes/${noteId}`, {
+  method: 'PUT',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(updates)
+});
+
+const updatedNote = await response.json();
+console.log(updatedNote);
+```
+
+```python Python
+import requests
+import json
+
+note_id = 23
+updates = {
+    "id": note_id,
+    "title": "Advanced CSS and Flexbox",
+    "content": "Updated content with more details about Flexbox...",
+    "color": "success"
+}
+
+response = requests.put(
+    f'https://arfan-notes.val.run/api/notes/{note_id}',
+    headers={'Content-Type': 'application/json'},
+    data=json.dumps(updates)
+)
+
+updated_note = response.json()
+print(updated_note)
+```
+</CodeGroup>
+
+## Request Example
+
+<RequestExample>
+```json Update Request Body
+{
+  "id": 23,
+  "title": "Advanced CSS and Flexbox Techniques",
+  "content": "Comprehensive guide to modern CSS layout techniques including Grid, Flexbox, and responsive design patterns.",
+  "color": "success"
+}
+```
+</RequestExample>
+
+## Response
+
+<ResponseExample>
+```json Success Response
+{
+  "id": 23,
+  "title": "Advanced CSS and Flexbox Techniques",
+  "content": "Comprehensive guide to modern CSS layout techniques including Grid, Flexbox, and responsive design patterns.",
+  "category": "css",
+  "group": "first",
+  "color": "success",
+  "archived": false,
+  "createdAt": "2024-01-25T14:30:00Z",
+  "updatedAt": "2024-01-25T16:45:00Z"
+}
+```
+
+```json Error Response (Note Not Found)
+{
+  "error": "Note with ID 23 not found"
+}
+```
+
+```json Error Response (ID Mismatch)
+{
+  "error": "ID in request body must match the ID in the URL path"
+}
+```
+
+```json Error Response (Invalid Field)
+{
+  "error": "Invalid category. Must be one of: css, val-town, prompts, notes, chat-gpt, cursor-chats, bash-commands"
+}
+```
+</ResponseExample>
+
+## Important Notes
+
+- The `id` field in the request body must match the `id` in the URL path
+- Only provided fields will be updated; other fields remain unchanged
+- The `updatedAt` timestamp will be automatically updated
+- The `archived` status cannot be changed through this endpoint (use archive/unarchive endpoints)
+
+## Validation Rules
+
+- **id**: Must be a valid integer and match an existing note
+- **title**: If provided, must be a non-empty string
+- **content**: If provided, must be a non-empty string
+- **category**: If provided, must be one of the valid category values
+- **group**: If provided, must be one of the valid group values
+- **color**: If provided, must be one of the valid color values 

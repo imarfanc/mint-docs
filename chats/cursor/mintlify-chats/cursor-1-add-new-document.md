@@ -55,7 +55,10 @@ Now I need to update the `docs.json` file to add the new "web-dev" section with 
 
 Now I'll update the `docs.json` file to add the new "web-dev" section with the val-town page. I'll add it to the "Guides" tab:
 
-"""json
+```markdown
+```
+
+```json
           {
             "group": "Essentials",
             "pages": [
@@ -87,7 +90,10 @@ Now I'll update the `docs.json` file to add the new "web-dev" section with the v
               "val-town"
             ]
           }
-"""
+```
+
+```
+```
 
 Perfect! I've successfully created the new Val Town documentation page and added it to the sidebar. Here's what I've done:
 
@@ -139,7 +145,10 @@ Here's what I found from the Mintlify documentation:
 
 Let me create a custom React component for you:
 
-"""javascript
+```javascript
+```
+
+```javascript
 export const CodeRunner = ({ code, language = "bash", filename }) => {
   const copyToClipboard = async (text) => {
     try {
@@ -230,6 +239,9 @@ export const CodeRunner = ({ code, language = "bash", filename }) => {
   );
 };
 """
+
+```
+```
 
 Now let me update your `val-town.mdx` file to use this custom component:
 

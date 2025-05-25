@@ -2,6 +2,7 @@ export const CodeRunner = (props) => {
   const code = props.code;
   const language = props.language || "bash";
   const filename = props.filename;
+  const [hasRun, setHasRun] = React.useState(false);
 
   const copyToClipboard = async (text) => {
     try {
@@ -21,6 +22,7 @@ export const CodeRunner = (props) => {
   };
 
   const handleRun = async () => {
+    setHasRun(true);
     await copyToClipboard(code);
     try {
       window.location.href = 'kmtrigger://macro=web_2_terminal';
@@ -61,7 +63,10 @@ export const CodeRunner = (props) => {
         backgroundColor: "rgba(0, 0, 0, 0.3)",
         backdropFilter: "blur(10px)",
         WebkitBackdropFilter: "blur(10px)",
-        boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)"
+        boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)",
+        filter: hasRun ? "grayscale(1) blur(2px)" : "none",
+        opacity: hasRun ? 0.6 : 1,
+        transition: "all 0.3s ease"
       }}
     >
       <div

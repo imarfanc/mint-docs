@@ -1,0 +1,107 @@
+---
+title: 'Get All Notes'
+api: 'GET https://arfan-notes.val.run/api/notes'
+description: 'Retrieve all notes from the database'
+---
+
+# Get All Notes
+
+Retrieves all notes stored in the database. This endpoint returns an array of note objects with all their properties.
+
+## Endpoint
+
+<CodeGroup>
+```bash cURL
+curl -X GET "https://arfan-notes.val.run/api/notes" \
+  -H "Content-Type: application/json"
+```
+
+```javascript JavaScript
+const response = await fetch('https://arfan-notes.val.run/api/notes', {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json'
+  }
+});
+
+const notes = await response.json();
+console.log(notes);
+```
+
+```python Python
+import requests
+
+response = requests.get('https://arfan-notes.val.run/api/notes')
+notes = response.json()
+print(notes)
+```
+</CodeGroup>
+
+## Response
+
+<ResponseExample>
+```json Example Response
+[
+  {
+    "id": 1,
+    "title": "CSS Grid Layout",
+    "content": "CSS Grid is a powerful layout system...",
+    "category": "css",
+    "group": "first",
+    "color": "primary",
+    "archived": false,
+    "createdAt": "2024-01-15T10:30:00Z",
+    "updatedAt": "2024-01-15T10:30:00Z"
+  },
+  {
+    "id": 2,
+    "title": "Val Town Functions",
+    "content": "Val Town is a platform for writing...",
+    "category": "val-town",
+    "group": "second",
+    "color": "info",
+    "archived": false,
+    "createdAt": "2024-01-16T14:22:00Z",
+    "updatedAt": "2024-01-16T14:22:00Z"
+  }
+]
+```
+</ResponseExample>
+
+## Response Fields
+
+<ResponseField name="id" type="integer">
+  Unique identifier for the note
+</ResponseField>
+
+<ResponseField name="title" type="string">
+  The title of the note
+</ResponseField>
+
+<ResponseField name="content" type="string">
+  The main content/body of the note
+</ResponseField>
+
+<ResponseField name="category" type="string">
+  Category classification (css, val-town, prompts, notes, chat-gpt, cursor-chats, bash-commands)
+</ResponseField>
+
+<ResponseField name="group" type="string">
+  Group classification (first, second, third, fourth, fifth)
+</ResponseField>
+
+<ResponseField name="color" type="string">
+  Visual color coding (primary, secondary, accent, neutral, info, success, warning, error)
+</ResponseField>
+
+<ResponseField name="archived" type="boolean">
+  Whether the note is archived or not
+</ResponseField>
+
+<ResponseField name="createdAt" type="datetime">
+  Timestamp when the note was created
+</ResponseField>
+
+<ResponseField name="updatedAt" type="datetime">
+  Timestamp when the note was last updated
+</ResponseField> 

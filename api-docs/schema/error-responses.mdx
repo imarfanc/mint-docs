@@ -1,0 +1,225 @@
+---
+title: 'Error Response Schema'
+description: 'Standard error response formats and HTTP status codes used by the Summer Notes API'
+---
+
+# Error Response Schema
+
+The Summer Notes API uses consistent error response formats and HTTP status codes to help you understand and handle errors effectively.
+
+## Standard Error Format
+
+All error responses follow this consistent structure:
+
+```json
+{
+  "error": "Error message description"
+}
+```
+
+## HTTP Status Codes
+
+The API uses standard HTTP status codes to indicate the success or failure of requests:
+
+### 200 - Success
+- **Description**: Request completed successfully
+- **Usage**: All successful GET, POST, PUT, and PATCH operations
+- **Response**: Contains the requested data or updated object
+
+### 400 - Bad Request
+- **Description**: Invalid request due to client error
+- **Common Causes**:
+  - Missing required fields
+  - Invalid field values
+  - Malformed JSON
+  - Invalid enum values
+
+### 404 - Not Found
+- **Description**: Requested resource does not exist
+- **Common Causes**:
+  - Note ID not found
+  - Invalid endpoint URL
+
+### 500 - Internal Server Error
+- **Description**: Server encountered an unexpected error
+- **Common Causes**:
+  - Database connection issues
+  - Server configuration problems
+  - Unexpected application errors
+
+## Common Error Examples
+
+### Missing Required Fields
+
+<ResponseExample>
+```json 400 Bad Request
+{
+  "error": "Missing required fields: title, content"
+}
+```
+</ResponseExample>
+
+**Occurs when**: Creating a note without providing all required fields
+
+### Invalid Category Value
+
+<ResponseExample>
+```json 400 Bad Request
+{
+  "error": "Invalid category. Must be one of: css, val-town, prompts, notes, chat-gpt, cursor-chats, bash-commands"
+}
+```
+</ResponseExample>
+
+**Occurs when**: Providing an invalid category value
+
+### Invalid Group Value
+
+<ResponseExample>
+```json 400 Bad Request
+{
+  "error": "Invalid group. Must be one of: first, second, third, fourth, fifth"
+}
+```
+</ResponseExample>
+
+**Occurs when**: Providing an invalid group value
+
+### Invalid Color Value
+
+<ResponseExample>
+```json 400 Bad Request
+{
+  "error": "Invalid color. Must be one of: primary, secondary, accent, neutral, info, success, warning, error"
+}
+```
+</ResponseExample>
+
+**Occurs when**: Providing an invalid color value
+
+### Note Not Found
+
+<ResponseExample>
+```json 404 Not Found
+{
+  "error": "Note with ID 23 not found"
+}
+```
+</ResponseExample>
+
+**Occurs when**: Trying to access, update, or archive a non-existent note
+
+### ID Mismatch
+
+<ResponseExample>
+```json 400 Bad Request
+{
+  "error": "ID in request body must match the ID in the URL path"
+}
+```
+</ResponseExample>
+
+**Occurs when**: The ID in the request body doesn't match the URL parameter
+
+### Already Archived
+
+<ResponseExample>
+```json 400 Bad Request
+{
+  "error": "Note is already archived"
+}
+```
+</ResponseExample>
+
+**Occurs when**: Trying to archive a note that's already archived
+
+### Not Archived
+
+<ResponseExample>
+```json 400 Bad Request
+{
+  "error": "Note is not archived"
+}
+```
+</ResponseExample>
+
+**Occurs when**: Trying to unarchive a note that's not archived
+
+### Malformed JSON
+
+<ResponseExample>
+```json 400 Bad Request
+{
+  "error": "Invalid JSON format in request body"
+}
+```
+</ResponseExample>
+
+**Occurs when**: Request body contains invalid JSON syntax
+
+### Empty Fields
+
+<ResponseExample>
+```json 400 Bad Request
+{
+  "error": "Title cannot be empty"
+}
+```
+</ResponseExample>
+
+**Occurs when**: Required string fields are empty or whitespace-only
+
+## Error Handling Best Practices
+
+### JavaScript Example
+```javascript
+try {
+  const response = await fetch('https://arfan-notes.val.run/api/notes', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(noteData)
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    console.error(`Error ${response.status}:`, error.error);
+    return;
+  }
+
+  const note = await response.json();
+  console.log('Note created:', note);
+} catch (error) {
+  console.error('Network error:', error);
+}
+```
+
+### Python Example
+```python
+import requests
+import json
+
+try:
+    response = requests.post(
+        'https://arfan-notes.val.run/api/notes',
+        headers={'Content-Type': 'application/json'},
+        data=json.dumps(note_data)
+    )
+    
+    if response.status_code == 200:
+        note = response.json()
+        print('Note created:', note)
+    else:
+        error = response.json()
+        print(f'Error {response.status_code}: {error["error"]}')
+        
+except requests.exceptions.RequestException as e:
+    print('Network error:', e)
+```
+
+## Debugging Tips
+
+1. **Check HTTP Status Code**: Always check the status code first to understand the type of error
+2. **Read Error Messages**: Error messages are descriptive and indicate exactly what went wrong
+3. **Validate Input**: Ensure all required fields are provided and use valid enum values
+4. **Handle Network Errors**: Implement proper error handling for network connectivity issues
+5. **Log Errors**: Log error responses for debugging and monitoring purposes 

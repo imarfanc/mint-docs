@@ -1,0 +1,46 @@
+---
+title: 'Authentication'
+description: 'Authentication and authorization for the Summer Notes API'
+---
+
+# Authentication
+
+The Summer Notes API currently operates as a public API without authentication requirements. This makes it easy to test and integrate during development.
+
+## Current Setup
+
+- **No API Keys Required**: All endpoints are publicly accessible
+- **No Rate Limiting**: Currently no rate limits are enforced
+- **CORS Enabled**: Cross-origin requests are supported
+
+## Headers
+
+While authentication is not required, it's recommended to include standard headers in your requests:
+
+```http
+Content-Type: application/json
+Accept: application/json
+```
+
+## Future Considerations
+
+In future versions, the API may implement:
+
+- API key authentication
+- Rate limiting
+- User-specific note access
+- Permission-based operations
+
+## Example Request
+
+```javascript
+fetch('https://arfan-notes.val.run/api/notes', {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  }
+})
+.then(response => response.json())
+.then(data => console.log(data));
+``` 

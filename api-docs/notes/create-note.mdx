@@ -1,0 +1,151 @@
+---
+title: 'Create Note'
+api: 'POST https://arfan-notes.val.run/api/notes'
+description: 'Create a new note with title, content, category, group, and color'
+---
+
+# Create Note
+
+Create a new note by providing the required fields. All fields are mandatory for creating a note.
+
+## Request Body
+
+<ParamField body="title" type="string" required>
+  The title of the note
+</ParamField>
+
+<ParamField body="content" type="string" required>
+  The main content/body of the note
+</ParamField>
+
+<ParamField body="category" type="string" required>
+  Category classification. Valid values: `css`, `val-town`, `prompts`, `notes`, `chat-gpt`, `cursor-chats`, `bash-commands`
+</ParamField>
+
+<ParamField body="group" type="string" required>
+  Group classification. Valid values: `first`, `second`, `third`, `fourth`, `fifth`
+</ParamField>
+
+<ParamField body="color" type="string" required>
+  Visual color coding. Valid values: `primary`, `secondary`, `accent`, `neutral`, `info`, `success`, `warning`, `error`
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+```bash cURL
+curl -X POST "https://arfan-notes.val.run/api/notes" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "Advanced CSS Techniques",
+    "content": "Modern CSS techniques including Grid, Flexbox, and custom properties...",
+    "category": "css",
+    "group": "first",
+    "color": "primary"
+  }'
+```
+
+```javascript JavaScript
+const newNote = {
+  title: "Advanced CSS Techniques",
+  content: "Modern CSS techniques including Grid, Flexbox, and custom properties...",
+  category: "css",
+  group: "first",
+  color: "primary"
+};
+
+const response = await fetch('https://arfan-notes.val.run/api/notes', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(newNote)
+});
+
+const createdNote = await response.json();
+console.log(createdNote);
+```
+
+```python Python
+import requests
+import json
+
+new_note = {
+    "title": "Advanced CSS Techniques",
+    "content": "Modern CSS techniques including Grid, Flexbox, and custom properties...",
+    "category": "css",
+    "group": "first",
+    "color": "primary"
+}
+
+response = requests.post(
+    'https://arfan-notes.val.run/api/notes',
+    headers={'Content-Type': 'application/json'},
+    data=json.dumps(new_note)
+)
+
+created_note = response.json()
+print(created_note)
+```
+</CodeGroup>
+
+## Request Example
+
+<RequestExample>
+```json Request Body
+{
+  "title": "Advanced CSS Techniques",
+  "content": "Modern CSS techniques including Grid, Flexbox, and custom properties. These tools allow developers to create responsive and beautiful layouts with minimal code.",
+  "category": "css",
+  "group": "first",
+  "color": "primary"
+}
+```
+</RequestExample>
+
+## Response
+
+<ResponseExample>
+```json Success Response
+{
+  "id": 23,
+  "title": "Advanced CSS Techniques",
+  "content": "Modern CSS techniques including Grid, Flexbox, and custom properties. These tools allow developers to create responsive and beautiful layouts with minimal code.",
+  "category": "css",
+  "group": "first",
+  "color": "primary",
+  "archived": false,
+  "createdAt": "2024-01-25T14:30:00Z",
+  "updatedAt": "2024-01-25T14:30:00Z"
+}
+```
+
+```json Error Response (Missing Fields)
+{
+  "error": "Missing required fields: title, content"
+}
+```
+
+```json Error Response (Invalid Category)
+{
+  "error": "Invalid category. Must be one of: css, val-town, prompts, notes, chat-gpt, cursor-chats, bash-commands"
+}
+```
+</ResponseExample>
+
+## Validation Rules
+
+- **title**: Must be a non-empty string
+- **content**: Must be a non-empty string
+- **category**: Must be one of the valid category values
+- **group**: Must be one of the valid group values
+- **color**: Must be one of the valid color values
+
+## Response Fields
+
+The response includes all the provided fields plus:
+
+- **id**: Auto-generated unique identifier
+- **archived**: Defaults to `false` for new notes
+- **createdAt**: Timestamp when the note was created
+- **updatedAt**: Timestamp when the note was last updated (same as createdAt for new notes) 

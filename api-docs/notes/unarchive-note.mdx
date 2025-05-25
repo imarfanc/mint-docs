@@ -1,0 +1,126 @@
+---
+title: 'Unarchive Note'
+api: 'PATCH https://arfan-notes.val.run/api/notes/:id/unarchive'
+description: 'Unarchive a note by setting its archived status to false'
+---
+
+# Unarchive Note
+
+Restore an archived note by setting its `archived` status to `false`. This makes the note visible in regular views again.
+
+## Path Parameters
+
+<ParamField path="id" type="integer" required>
+  The unique identifier of the note to unarchive
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+```bash cURL
+curl -X PATCH "https://arfan-notes.val.run/api/notes/23/unarchive" \
+  -H "Content-Type: application/json"
+```
+
+```javascript JavaScript
+const noteId = 23;
+
+const response = await fetch(`https://arfan-notes.val.run/api/notes/${noteId}/unarchive`, {
+  method: 'PATCH',
+  headers: {
+    'Content-Type': 'application/json'
+  }
+});
+
+const unarchivedNote = await response.json();
+console.log(unarchivedNote);
+```
+
+```python Python
+import requests
+
+note_id = 23
+
+response = requests.patch(
+    f'https://arfan-notes.val.run/api/notes/{note_id}/unarchive',
+    headers={'Content-Type': 'application/json'}
+)
+
+unarchived_note = response.json()
+print(unarchived_note)
+```
+</CodeGroup>
+
+## Response
+
+<ResponseExample>
+```json Success Response
+{
+  "id": 23,
+  "title": "Advanced CSS Techniques",
+  "content": "Modern CSS techniques including Grid, Flexbox, and custom properties...",
+  "category": "css",
+  "group": "first",
+  "color": "primary",
+  "archived": false,
+  "createdAt": "2024-01-25T14:30:00Z",
+  "updatedAt": "2024-01-25T18:45:00Z"
+}
+```
+
+```json Error Response (Note Not Found)
+{
+  "error": "Note with ID 23 not found"
+}
+```
+
+```json Error Response (Not Archived)
+{
+  "error": "Note is not archived"
+}
+```
+</ResponseExample>
+
+## Behavior
+
+- Sets the `archived` field to `false`
+- Updates the `updatedAt` timestamp
+- Returns the complete updated note object
+- Unarchived notes will appear in regular note listings
+
+## Use Cases
+
+- **Content Recovery**: Restore accidentally archived notes
+- **Workflow Management**: Reactivate notes that are relevant again
+- **Content Management**: Bring back historical notes for reference
+- **Mistake Correction**: Undo archiving operations
+
+## Related Endpoints
+
+- Use [Archive Note](/api/notes/archive-note) to archive a note
+- Use [Get Filtered Notes](/api/notes/get-filtered-notes) with `archived=false` to see all active notes
+- Use [Get All Notes](/api/notes/get-all-notes) to see both archived and unarchived notes
+
+## Workflow Example
+
+```javascript
+// Check if a note is archived before unarchiving
+const noteId = 23;
+
+// First, get the note to check its status
+const checkResponse = await fetch(`https://arfan-notes.val.run/api/notes?id=${noteId}`);
+const notes = await checkResponse.json();
+
+if (notes.length > 0 && notes[0].archived) {
+  // Note is archived, so we can unarchive it
+  const unarchiveResponse = await fetch(`https://arfan-notes.val.run/api/notes/${noteId}/unarchive`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' }
+  });
+  
+  const unarchivedNote = await unarchiveResponse.json();
+  console.log('Note unarchived:', unarchivedNote);
+} else {
+  console.log('Note is not archived or does not exist');
+}
+``` 

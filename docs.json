@@ -11,69 +11,102 @@
   "navigation": {
     "dropdowns": [
       {
-        "dropdown": "Guides",
+        "_comment_start": "the main docs ——————————————————————————————————————————————————",
+        "dropdown": "main docs",
         "groups": [
           {
-            "group": "Get Started",
-            "pages": [
-              "introduction",
-              "quickstart",
-              "development"
-            ]
-          },
-          {
-            "group": "Essentials",
-            "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/settings",
-              "essentials/navigation",
-              "essentials/reusable-snippets"
-            ]
-          },
-          {
             "group": "web-dev",
-            "icon": "chart-no-axes-combined",
+            "icon": "newspaper",
             "pages": [
               "web-dev/val-town"
             ]
           },
           {
             "group": "chats",
+            "icon": "messages",
             "pages": [{
               "group": "cursor",
-              "icon": "chart-no-axes-combined",
+              "icon": "arrow-pointer",
               "pages": [
-                "chats/cursor/cursor-1-add-new-document",
-                "chats/cursor/cursor-2-mintlify-framework",
-                "chats/cursor/cursor-3-design-enhancements",
-                "chats/cursor/cursor-4-code-display-enhancements",
-                "chats/cursor/cursor-5-grayscale-card-on-code",
-                "chats/cursor/cursor-6-rename-files-underscore",
-                "chats/cursor/cursor-7-mintlify-framework-troubl"
+                "chats/cursor/mintlify-chats/cursor-1-add-new-document",
+                "chats/cursor/mintlify-chats/cursor-2-mintlify-framework",
+                "chats/cursor/mintlify-chats/cursor-3-design-enhancements",
+                "chats/cursor/mintlify-chats/cursor-4-code-display-enhancements",
+                "chats/cursor/mintlify-chats/cursor-5-grayscale-card-on-code",
+                "chats/cursor/mintlify-chats/cursor-6-rename-files-underscore",
+                "chats/cursor/mintlify-chats/cursor-7-mintlify-framework-troubl",
+                "chats/cursor/mintlify-chats/cursor-8-json-modifications-for-api-doc",
+                "chats/cursor/mintlify-chats/cursor-9-api-reserved-path-error-troubles",
+                "chats/cursor/mintlify-chats/cursor-10-documentation-updates-and-ui"
               ]
-            }
+            }]
+          },
+          {
+            "group": "Default",
+            "icon": "house",
+            "pages": [
+              {
+                "group": "Get Started",
+                "pages": [
+                  "introduction",
+                  "quickstart",
+                  "development"
+                ]
+              },
+              {
+                "group": "Essentials",
+                "pages": [
+                  "essentials/markdown",
+                  "essentials/code",
+                  "essentials/images",
+                  "essentials/settings",
+                  "essentials/navigation",
+                  "essentials/reusable-snippets"
+                ]
+              }
+            ]
+          }
+        ],
+        "_comment_end": "end of main docs ——————————————————————————————————————————————————"
+      },
+      {
+        "dropdown": "docs 2",
+        "groups": [
+          {
+            "group": "Examples",
+            "icon": "lightbulb",
+            "pages": [
+              "docs-2/examples"
             ]
           }
         ]
       },
       {
-        "dropdown": "API Reference",
+        "dropdown": "Summer Notes API",
         "groups": [
           {
-            "group": "API Documentation",
+            "group": "Getting Started",
             "pages": [
-              "api-reference/introduction"
+              "api-docs/introduction",
+              "api-docs/authentication"
             ]
           },
           {
-            "group": "Endpoint Examples",
+            "group": "Notes Endpoints",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "api-docs/notes/get-all-notes",
+              "api-docs/notes/get-filtered-notes", 
+              "api-docs/notes/create-note",
+              "api-docs/notes/update-note",
+              "api-docs/notes/archive-note",
+              "api-docs/notes/unarchive-note"
+            ]
+          },
+          {
+            "group": "Data Schema",
+            "pages": [
+              "api-docs/schema/note-object",
+              "api-docs/schema/error-responses"
             ]
           }
         ]

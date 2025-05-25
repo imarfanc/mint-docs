@@ -1,0 +1,161 @@
+---
+title: 'Note Object Schema'
+description: 'Complete data structure and field definitions for note objects'
+---
+
+# Note Object Schema
+
+The note object is the core data structure used throughout the Summer Notes API. This page details all fields, their types, constraints, and valid values.
+
+## Complete Schema
+
+```json
+{
+  "id": "integer",
+  "title": "string",
+  "content": "string",
+  "category": "string",
+  "group": "string", 
+  "color": "string",
+  "archived": "boolean",
+  "createdAt": "datetime",
+  "updatedAt": "datetime"
+}
+```
+
+## Field Definitions
+
+### id
+- **Type**: `integer`
+- **Description**: Unique identifier for the note
+- **Constraints**: Auto-generated, read-only
+- **Example**: `23`
+
+### title
+- **Type**: `string`
+- **Description**: The title/heading of the note
+- **Constraints**: Required, non-empty
+- **Example**: `"Advanced CSS Techniques"`
+
+### content
+- **Type**: `string`
+- **Description**: The main content/body of the note
+- **Constraints**: Required, non-empty
+- **Example**: `"Modern CSS techniques including Grid, Flexbox, and custom properties..."`
+
+### category
+- **Type**: `string`
+- **Description**: Category classification for organizing notes
+- **Constraints**: Required, must be one of valid values
+- **Valid Values**:
+  - `css`
+  - `val-town`
+  - `prompts`
+  - `notes`
+  - `chat-gpt`
+  - `cursor-chats`
+  - `bash-commands`
+- **Example**: `"css"`
+
+### group
+- **Type**: `string`
+- **Description**: Group classification for further organization
+- **Constraints**: Required, must be one of valid values
+- **Valid Values**:
+  - `first`
+  - `second`
+  - `third`
+  - `fourth`
+  - `fifth`
+- **Example**: `"first"`
+
+### color
+- **Type**: `string`
+- **Description**: Visual color coding for the note
+- **Constraints**: Required, must be one of valid values
+- **Valid Values**:
+  - `primary`
+  - `secondary`
+  - `accent`
+  - `neutral`
+  - `info`
+  - `success`
+  - `warning`
+  - `error`
+- **Example**: `"primary"`
+
+### archived
+- **Type**: `boolean`
+- **Description**: Whether the note is archived or active
+- **Constraints**: System-managed, defaults to `false`
+- **Values**: `true` or `false`
+- **Example**: `false`
+
+### createdAt
+- **Type**: `datetime`
+- **Description**: Timestamp when the note was created
+- **Constraints**: Auto-generated, read-only, ISO 8601 format
+- **Example**: `"2024-01-25T14:30:00Z"`
+
+### updatedAt
+- **Type**: `datetime`
+- **Description**: Timestamp when the note was last modified
+- **Constraints**: Auto-updated, read-only, ISO 8601 format
+- **Example**: `"2024-01-25T16:45:00Z"`
+
+## Example Note Objects
+
+### New Note
+```json
+{
+  "id": 1,
+  "title": "CSS Grid Layout Basics",
+  "content": "CSS Grid is a powerful two-dimensional layout system that allows you to create complex layouts with ease.",
+  "category": "css",
+  "group": "first",
+  "color": "primary",
+  "archived": false,
+  "createdAt": "2024-01-15T10:30:00Z",
+  "updatedAt": "2024-01-15T10:30:00Z"
+}
+```
+
+### Updated Note
+```json
+{
+  "id": 1,
+  "title": "CSS Grid Layout - Complete Guide",
+  "content": "CSS Grid is a powerful two-dimensional layout system that allows you to create complex layouts with ease. This comprehensive guide covers all aspects of Grid layout.",
+  "category": "css",
+  "group": "first",
+  "color": "success",
+  "archived": false,
+  "createdAt": "2024-01-15T10:30:00Z",
+  "updatedAt": "2024-01-15T14:22:00Z"
+}
+```
+
+### Archived Note
+```json
+{
+  "id": 1,
+  "title": "CSS Grid Layout - Complete Guide",
+  "content": "CSS Grid is a powerful two-dimensional layout system...",
+  "category": "css",
+  "group": "first",
+  "color": "success",
+  "archived": true,
+  "createdAt": "2024-01-15T10:30:00Z",
+  "updatedAt": "2024-01-16T09:15:00Z"
+}
+```
+
+## Validation Summary
+
+When creating or updating notes, ensure:
+
+1. **Required fields** are provided: `title`, `content`, `category`, `group`, `color`
+2. **Valid enums** are used for `category`, `group`, and `color`
+3. **Non-empty strings** for `title` and `content`
+4. **Read-only fields** (`id`, `createdAt`, `updatedAt`) are not manually set
+5. **Archive status** is managed through dedicated endpoints 

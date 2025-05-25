@@ -1,0 +1,52 @@
+---
+title: 'Summer Notes API'
+description: 'A comprehensive API for managing notes with categories, groups, and archiving functionality'
+---
+
+# Summer Notes API
+
+Welcome to the Summer Notes API documentation. This API provides a complete set of endpoints for managing notes with advanced categorization, grouping, and archiving features.
+
+## Base URL
+
+All API requests should be made to:
+
+```
+https://arfan-notes.val.run
+```
+
+## Key Features
+
+- **Note Management**: Create, read, update, and archive notes
+- **Categorization**: Organize notes by predefined categories
+- **Grouping**: Group notes for better organization
+- **Color Coding**: Assign colors to notes for visual organization
+- **Archiving**: Archive and restore notes without permanent deletion
+- **Filtering**: Advanced filtering by category, group, and archived status
+
+## Quick Start
+
+To get started with the Summer Notes API:
+
+1. **Get all notes**: `GET /api/notes`
+2. **Create a note**: `POST /api/notes` with required fields
+3. **Update a note**: `PUT /api/notes/:id`
+4. **Archive a note**: `PATCH /api/notes/:id/archive`
+
+## Response Format
+
+All API responses are in JSON format with appropriate HTTP status codes:
+
+- `200`: Success
+- `400`: Bad Request (validation errors)
+- `500`: Internal Server Error
+
+## Error Handling
+
+Error responses follow a consistent format:
+
+```json
+{
+  "error": "Error message description"
+}
+``` 
