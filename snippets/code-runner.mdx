@@ -29,9 +29,26 @@ export const CodeRunner = (props) => {
     }
   };
 
+  const highlightCode = (code, language) => {
+    if (
+      typeof window !== "undefined" &&
+      window.Prism &&
+      window.Prism.languages[language]
+    ) {
+      return window.Prism.highlight(
+        code,
+        window.Prism.languages[language],
+        language,
+      );
+    }
+    return code;
+  };
+
   if (typeof document === "undefined") {
     return null;
   }
+
+  const highlightedCode = highlightCode(code, language);
 
   return (
     <div 
@@ -142,10 +159,16 @@ export const CodeRunner = (props) => {
             lineHeight: "1.5",
             fontFamily: "'JetBrains Mono', 'Fira Code', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace",
             overflowX: "auto",
+            color: "#f8f8f2",
             backgroundColor: "transparent"
           }}
         >
-          <code className={`language-${language}`}>{code}</code>
+          <code
+            className={`language-${language}`}
+            dangerouslySetInnerHTML={{
+              __html: highlightedCode,
+            }}
+          />
         </pre>
       </div>
     </div>
