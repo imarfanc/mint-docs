@@ -109,5 +109,13 @@
       "github": "https://trendingrepos.com/",
       "linkedin": "https://www.inoreader.com/all_articles"
     }
+  },
+  "contextual": {
+    "options": [
+      "copy",
+      "view",
+      "chatgpt",
+      "claude"
+    ]
   }
 }
