@@ -5,103 +5,36 @@ export const CodeRunner = (props) => {
 
   const copyToClipboard = async (text) => {
     try {
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        await navigator.clipboard.writeText(text);
-      } else {
-        throw new Error("Clipboard API not available");
-      }
+      await navigator.clipboard.writeText(text);
     } catch (err) {
-      const textArea = document.createElement("textarea");
+      const textArea = document.createElement('textarea');
       textArea.value = text;
-      textArea.style.position = "fixed";
-      textArea.style.left = "-999999px";
-      textArea.style.top = "-999999px";
       document.body.appendChild(textArea);
-      textArea.focus();
       textArea.select();
-
-      try {
-        document.execCommand("copy");
-      } catch (execErr) {
-        console.error("Copy failed:", execErr);
-      }
-
+      document.execCommand('copy');
       document.body.removeChild(textArea);
     }
   };
 
-  const runCode = async () => {
+  const handleCopy = async () => {
+    await copyToClipboard(code);
+  };
+
+  const handleRun = async () => {
     await copyToClipboard(code);
     try {
-      window.location.href = "kmtrigger://macro=web_2_terminal";
+      window.location.href = 'kmtrigger://macro=web_2_terminal';
     } catch (err) {
-      console.error("Could not trigger kmtrigger URL scheme:", err);
+      console.error('Could not trigger URL scheme:', err);
     }
-  };
-
-  const copyCode = async (event) => {
-    event.preventDefault();
-    await copyToClipboard(code);
-
-    const button = event.currentTarget;
-    const originalContent = button.innerHTML;
-    button.innerHTML = '<Icon icon="check" size={16} color="#22c55e" />';
-
-    setTimeout(() => {
-      button.innerHTML = originalContent;
-    }, 2000);
-  };
-
-  const highlightCode = (code, language) => {
-    if (
-      typeof window !== "undefined" &&
-      window.Prism &&
-      window.Prism.languages[language]
-    ) {
-      return window.Prism.highlight(
-        code,
-        window.Prism.languages[language],
-        language,
-      );
-    }
-    return code;
   };
 
   if (typeof document === "undefined") {
     return null;
   }
 
-  const buttonBaseStyle = {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "32px",
-    height: "32px",
-    border: "1px solid rgba(255, 255, 255, 0.1)",
-    borderRadius: "6px",
-    cursor: "pointer",
-    transition: "all 0.2s ease",
-    backdropFilter: "blur(10px)",
-    WebkitBackdropFilter: "blur(10px)",
-  };
-
-  const copyButtonStyle = {
-    ...buttonBaseStyle,
-    color: "rgba(255, 255, 255, 0.8)",
-    backgroundColor: "rgba(255, 255, 255, 0.05)",
-  };
-
-  const runButtonStyle = {
-    ...buttonBaseStyle,
-    color: "white",
-    backgroundColor: "rgba(34, 197, 94, 0.8)",
-    border: "1px solid rgba(34, 197, 94, 0.3)",
-  };
-
-  const highlightedCode = highlightCode(code, language);
-
   return (
-    <div
+    <div 
       className="hover:!border-primary dark:hover:!border-primary-light"
       style={{
         margin: "20px 0",
@@ -111,7 +44,7 @@ export const CodeRunner = (props) => {
         backgroundColor: "rgba(0, 0, 0, 0.3)",
         backdropFilter: "blur(10px)",
         WebkitBackdropFilter: "blur(10px)",
-        boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)",
+        boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)"
       }}
     >
       <div
@@ -121,7 +54,7 @@ export const CodeRunner = (props) => {
           justifyContent: "space-between",
           padding: "8px 16px",
           backgroundColor: "rgba(255, 255, 255, 0.05)",
-          borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
+          borderBottom: "1px solid rgba(255, 255, 255, 0.1)"
         }}
       >
         {filename && (
@@ -130,70 +63,68 @@ export const CodeRunner = (props) => {
               fontSize: "13px",
               color: "rgba(255, 255, 255, 0.8)",
               fontWeight: "500",
-              fontFamily: "monospace",
+              fontFamily: "monospace"
             }}
           >
             {filename}
           </span>
         )}
-        <div style={{ display: "flex", gap: "6px", marginLeft: "auto" }}>
+        <div style={{ display: "flex", gap: "4px", marginLeft: "auto" }}>
           <button
-            onClick={copyCode}
-            style={copyButtonStyle}
+            onClick={handleCopy}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "32px",
+              height: "32px",
+              border: "none",
+              borderRadius: "6px",
+              cursor: "pointer",
+              backgroundColor: "transparent",
+              color: "rgba(255, 255, 255, 0.6)",
+              transition: "all 0.2s ease"
+            }}
             title="Copy code"
-            onMouseEnter={(e) => {
-              e.target.style.backgroundColor = "rgba(255, 255, 255, 0.1)";
-              e.target.style.transform = "translateY(-1px)";
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.backgroundColor = "rgba(255, 255, 255, 0.05)";
-              e.target.style.transform = "translateY(0)";
-            }}
           >
             <Icon icon="copy" size={16} />
           </button>
           <button
-            onClick={runCode}
-            style={runButtonStyle}
-            title="Copy code and run in terminal"
-            onMouseEnter={(e) => {
-              e.target.style.backgroundColor = "rgba(34, 197, 94, 1)";
-              e.target.style.transform = "translateY(-1px)";
-              e.target.style.boxShadow = "0 4px 12px rgba(34, 197, 94, 0.4)";
+            onClick={handleRun}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "32px",
+              height: "32px",
+              border: "none",
+              borderRadius: "6px",
+              cursor: "pointer",
+              backgroundColor: "transparent",
+              color: "rgba(34, 197, 94, 0.8)",
+              transition: "all 0.2s ease"
             }}
-            onMouseLeave={(e) => {
-              e.target.style.backgroundColor = "rgba(34, 197, 94, 0.8)";
-              e.target.style.transform = "translateY(0)";
-              e.target.style.boxShadow = "none";
-            }}
+            title="Run in terminal"
           >
             <Icon icon="play" size={16} />
           </button>
         </div>
       </div>
 
-      <div
-        style={{ padding: "16px", backgroundColor: "rgba(0, 0, 0, 0.2)" }}
-      >
+      <div style={{ padding: "16px", backgroundColor: "rgba(0, 0, 0, 0.2)" }}>
         <pre
           style={{
             margin: "0",
             padding: "0",
             fontSize: "14px",
             lineHeight: "1.5",
-            fontFamily:
-              "'JetBrains Mono', 'Fira Code', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace",
+            fontFamily: "'JetBrains Mono', 'Fira Code', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace",
             overflowX: "auto",
             color: "#f8f8f2",
-            backgroundColor: "transparent",
+            backgroundColor: "transparent"
           }}
         >
-          <code
-            className={`language-${language}`}
-            dangerouslySetInnerHTML={{
-              __html: highlightedCode,
-            }}
-          />
+          <code>{code}</code>
         </pre>
       </div>
     </div>
