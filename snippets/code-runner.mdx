@@ -69,6 +69,7 @@ export const CodeRunner = (props) => {
             {filename}
           </span>
         )}
+        
         <div style={{ display: "flex", gap: "4px", marginLeft: "auto" }}>
           <button
             onClick={handleCopy}
@@ -99,6 +100,7 @@ export const CodeRunner = (props) => {
           >
             <Icon icon="copy" size={16} />
           </button>
+          
           <button
             onClick={handleRun}
             style={{
