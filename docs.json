@@ -8,10 +8,13 @@
     "dark": "#0D9373"
   },
   "favicon": "/favicon.svg",
+  "icons": {
+    "library": "lucide"
+  },
   "navigation": {
-    "tabs": [
+    "dropdowns": [
       {
-        "tab": "Guides",
+        "dropdown": "Guides",
         "groups": [
           {
             "group": "Get Started",
@@ -34,27 +37,33 @@
           },
           {
             "group": "web-dev",
+            "icon": "chart-no-axes-combined",
             "pages": [
               "web-dev/val-town"
             ]
           },
           {
             "group": "chats",
-            "pages": [
-              "chats/cursor1",
-              "chats/cursor/cursor-1-add-new-document",
-              "chats/cursor/cursor-2-mintlify-framework",
-              "chats/cursor/cursor-3-design-enhancements",
-              "chats/cursor/cursor-4-code-display-enhancements",
-              "chats/cursor/cursor-5-grayscale-card-on-code",
-              "chats/cursor/cursor-6-rename-files-underscore",
-              "chats/cursor/cursor-7-mintlify-framework-troubl"
+            "pages": [{
+              "group": "cursor",
+              "icon": "chart-no-axes-combined",
+              "pages": [
+                "chats/cursor/test/cursor1",
+                "chats/cursor/cursor-1-add-new-document",
+                "chats/cursor/cursor-2-mintlify-framework",
+                "chats/cursor/cursor-3-design-enhancements",
+                "chats/cursor/cursor-4-code-display-enhancements",
+                "chats/cursor/cursor-5-grayscale-card-on-code",
+                "chats/cursor/cursor-6-rename-files-underscore",
+                "chats/cursor/cursor-7-mintlify-framework-troubl"
+              ]
+            }
             ]
           }
         ]
       },
       {
-        "tab": "API Reference",
+        "dropdown": "API Reference",
         "groups": [
           {
             "group": "API Documentation",
