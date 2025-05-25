@@ -85,6 +85,16 @@ export const CodeRunner = (props) => {
               color: "rgba(255, 255, 255, 0.6)",
               transition: "all 0.2s ease"
             }}
+            onMouseEnter={(e) => {
+              e.target.style.backgroundColor = "rgba(255, 255, 255, 0.1)";
+              e.target.style.color = "rgba(255, 255, 255, 0.9)";
+              e.target.style.transform = "scale(1.05)";
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = "transparent";
+              e.target.style.color = "rgba(255, 255, 255, 0.6)";
+              e.target.style.transform = "scale(1)";
+            }}
             title="Copy code"
           >
             <Icon icon="copy" size={16} />
@@ -104,6 +114,16 @@ export const CodeRunner = (props) => {
               color: "rgba(34, 197, 94, 0.8)",
               transition: "all 0.2s ease"
             }}
+            onMouseEnter={(e) => {
+              e.target.style.backgroundColor = "rgba(34, 197, 94, 0.1)";
+              e.target.style.color = "rgba(34, 197, 94, 1)";
+              e.target.style.transform = "scale(1.05)";
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = "transparent";
+              e.target.style.color = "rgba(34, 197, 94, 0.8)";
+              e.target.style.transform = "scale(1)";
+            }}
             title="Run in terminal"
           >
             <Icon icon="play" size={16} />
@@ -120,11 +140,10 @@ export const CodeRunner = (props) => {
             lineHeight: "1.5",
             fontFamily: "'JetBrains Mono', 'Fira Code', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace",
             overflowX: "auto",
-            color: "#f8f8f2",
             backgroundColor: "transparent"
           }}
         >
-          <code>{code}</code>
+          <code className={`language-${language}`}>{code}</code>
         </pre>
       </div>
     </div>
