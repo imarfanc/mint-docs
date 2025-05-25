@@ -18,7 +18,7 @@
             "group": "web-dev",
             "icon": "newspaper",
             "pages": [
-              "web-dev/val-town"
+              "docs/web-dev/val-town"
             ]
           },
           {
@@ -28,16 +28,16 @@
               "group": "cursor",
               "icon": "arrow-pointer",
               "pages": [
-                "chats/cursor/mintlify-chats/cursor-1-add-new-document",
-                "chats/cursor/mintlify-chats/cursor-2-mintlify-framework",
-                "chats/cursor/mintlify-chats/cursor-3-design-enhancements",
-                "chats/cursor/mintlify-chats/cursor-4-code-display-enhancements",
-                "chats/cursor/mintlify-chats/cursor-5-grayscale-card-on-code",
-                "chats/cursor/mintlify-chats/cursor-6-rename-files-underscore",
-                "chats/cursor/mintlify-chats/cursor-7-mintlify-framework-troubl",
-                "chats/cursor/mintlify-chats/cursor-8-json-modifications-for-api-doc",
-                "chats/cursor/mintlify-chats/cursor-9-api-reserved-path-error-troubles",
-                "chats/cursor/mintlify-chats/cursor-10-documentation-updates-and-ui"
+                "docs/chats/cursor/mintlify-chats/cursor-1-add-new-document",
+                "docs/chats/cursor/mintlify-chats/cursor-2-mintlify-framework",
+                "docs/chats/cursor/mintlify-chats/cursor-3-design-enhancements",
+                "docs/chats/cursor/mintlify-chats/cursor-4-code-display-enhancements",
+                "docs/chats/cursor/mintlify-chats/cursor-5-grayscale-card-on-code",
+                "docs/chats/cursor/mintlify-chats/cursor-6-rename-files-underscore",
+                "docs/chats/cursor/mintlify-chats/cursor-7-mintlify-framework-troubl",
+                "docs/chats/cursor/mintlify-chats/cursor-8-json-modifications-for-api-doc",
+                "docs/chats/cursor/mintlify-chats/cursor-9-api-reserved-path-error-troubles",
+                "docs/chats/cursor/mintlify-chats/cursor-10-documentation-updates-and-ui"
               ]
             }]
           },
@@ -48,20 +48,20 @@
               {
                 "group": "Get Started",
                 "pages": [
-                  "introduction",
-                  "quickstart",
-                  "development"
+                  "docs/introduction",
+                  "docs/quickstart",
+                  "docs/development"
                 ]
               },
               {
                 "group": "Essentials",
                 "pages": [
-                  "essentials/markdown",
-                  "essentials/code",
-                  "essentials/images",
-                  "essentials/settings",
-                  "essentials/navigation",
-                  "essentials/reusable-snippets"
+                  "docs/essentials/markdown",
+                  "docs/essentials/code",
+                  "docs/essentials/images",
+                  "docs/essentials/settings",
+                  "docs/essentials/navigation",
+                  "docs/essentials/reusable-snippets"
                 ]
               }
             ]
