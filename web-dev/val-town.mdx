@@ -3,6 +3,8 @@ title: "Val Town"
 description: "Collection of vals and web applications built on Val Town platform"
 ---
 
+import { CodeRunner } from '/snippets/code-runner.mdx';
+
 <Card title="Val Town Development" icon="code" href="https://val.town">
   A collection of vals and web applications built on the Val Town platform for rapid prototyping and deployment.
 </Card>
@@ -13,9 +15,19 @@ description: "Collection of vals and web applications built on Val Town platform
 
 A note-taking application built with Val Town for quick summer project notes and documentation.
 
-```bash
+<CodeRunner 
+  code="cd ~/Developer/local/vt-cli/summer-notes-v1/"
+  language="bash"
+/>
+
+<CodeRunner 
+  code={`cd ~/Developer/local/vt-cli/
+vt clone https://www.val.town/x/arfan/summer-notes-v1
 cd ~/Developer/local/vt-cli/summer-notes-v1/
-```
+vt status`}
+  language="bash"
+  filename="clone.sh"
+/>
 
 <CardGroup cols={2}>
   <Card title="Val Town Code" icon="code" href="https://www.val.town/x/arfan/summer-notes-v1">

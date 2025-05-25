@@ -35,8 +35,8 @@
           {
             "group": "web-dev",
             "pages": [
-              "val-town",
-              "web-dev/val-town-2"
+              "web-dev/val-town",
+              "chats/cursor/cursor_add_new_document_for_val_town"
             ]
           }
         ]
