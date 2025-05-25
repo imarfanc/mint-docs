@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "maple",
-  "name": "test docs",
+  "name": "docs",
   "colors": {
     "primary": "#0D9373",
     "light": "#55D799",
@@ -9,10 +9,10 @@
   },
   "favicon": "/favicon.svg",
   "navigation": {
-    "dropdowns": [
+    "tabs": [
       {
         "_comment_start": "the main docs ——————————————————————————————————————————————————",
-        "dropdown": "main docs",
+        "tab": "main docs",
         "groups": [
           {
             "group": "web-dev",
@@ -70,7 +70,7 @@
         "_comment_end": "end of main docs ——————————————————————————————————————————————————"
       },
       {
-        "dropdown": "docs 2",
+        "tab": "docs 2",
         "groups": [
           {
             "group": "Examples",
@@ -82,7 +82,7 @@
         ]
       },
       {
-        "dropdown": "Summer Notes API",
+        "tab": "Summer Notes API",
         "groups": [
           {
             "group": "Getting Started",
@@ -111,30 +111,19 @@
           }
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Community",
-          "href": "https://mintlify.com/community",
-          "icon": "slack"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
+    ]
   },
   "logo": {
     "light": "/logo/light.svg",
     "dark": "/logo/dark.svg"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "external Link",
+        "href": "https://arfanc.neocities.org/"
+      }
+    ]
   },
   "footer": {
     "socials": {

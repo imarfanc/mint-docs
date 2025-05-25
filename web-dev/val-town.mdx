@@ -10,6 +10,33 @@ import { CodeRunner } from '/snippets/code-runner.mdx';
   A collection of vals and web applications built on the Val Town platform for rapid prototyping and deployment.
 </Card>
 
+<Card
+  title="Val Town Development"
+  href="https://val.town"
+  style={{
+    backgroundImage: "url('https://cdn.midjourney.com/91ae2b50-77a6-417c-bf1e-c82c4ebc20b8/0_1.png')",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    color: "white",
+    padding: "2rem",
+  }}
+>
+  A collection of vals and web applications built on the Val Town platform for rapid prototyping and deployment.
+</Card>
+
+<Card>
+  <img
+    src="https://cdn.midjourney.com/91ae2b50-77a6-417c-bf1e-c82c4ebc20b8/0_1.png"
+    style={{ width: '200px', height: 'auto' }}
+    noZoom
+  />
+  Here is an example of a card with an image
+</Card>
+
+<Card title="Image Card" img="https://cdn.midjourney.com/91ae2b50-77a6-417c-bf1e-c82c4ebc20b8/0_1.png">
+  Here is an example of a card with an image
+</Card>
+
 ## Vals
 
 ### Summer Notes v1
@@ -30,6 +57,14 @@ vt status`}
   filename="clone.sh"
 />
 
+<CodeRunner 
+  code={`print("Hello, World!")
+for i in range(5):
+    print(f"Line {i + 1}: This is a random line of Python code."}`}
+  language="python"
+  filename="clone.py"
+/>
+
 <CardGroup cols={2}>
   <Card title="Val Town Code" icon="code" href="https://www.val.town/x/arfan/summer-notes-v1">
     View the source code and implementation on Val Town
@@ -37,4 +72,6 @@ vt status`}
   <Card title="Live Application" icon="globe" href="https://arfan-notes.val.run/">
     Access the deployed summer notes application
   </Card>
-</CardGroup> 
+</CardGroup>
+
+<iframe src="https://www.val.town/x/arfan/summer-notes-v1"> </iframe>
