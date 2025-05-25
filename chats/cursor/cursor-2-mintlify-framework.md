@@ -6,6 +6,7 @@ _Exported on 5/24/2025 at 20:08:46 CDT from Cursor (0.50.7)_
 ## chat 1
 **User**
 
+```bash
 mint dev
 (node:73964) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
 (Use `node --trace-deprecation ...` to show where the warning was created)
@@ -14,9 +15,10 @@ mint dev
 Error resolving import "CodeRunner" in /chats/cursor/cursor_add_new_document_for_val_town.md
 Error: Could not find export CodeRunner in snippet
     at file:///Users/arfan/.nvm/versions/node/v22.12.0/lib/node_modules/mint/node_modules/@mintlify/common/dist/mdx/snippets/resolveImport/index.js:32:19
-    at Generator.next (<anonymous>)
+    at Generator.next (&lt;anonymous&gt;)
     at file:///Users/arfan/.nvm/versions/node/v22.12.0/lib/node_modules/mint/node_modules/@mintlify/common/dist/mdx/snippets/resolveImport/index.js:7:71
-    at new Promise (<anonymou
+    at new Promise (&lt;anonymous&gt;
+```
 
 ✔ Local Mintlify instance is ready. Launching your site...
 Your local preview is available at http://localhost:3000

@@ -1,11 +1,11 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
-  "name": "Mint Starter Kit",
+  "theme": "maple",
+  "name": "test docs",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#0D9373",
+    "light": "#55D799",
+    "dark": "#0D9373"
   },
   "favicon": "/favicon.svg",
   "navigation": {
@@ -35,8 +35,20 @@
           {
             "group": "web-dev",
             "pages": [
-              "web-dev/val-town",
-              "chats/cursor/cursor_add_new_document_for_val_town"
+              "web-dev/val-town"
+            ]
+          },
+          {
+            "group": "chats",
+            "pages": [
+              "chats/cursor1",
+              "chats/cursor/cursor-1-add-new-document",
+              "chats/cursor/cursor-2-mintlify-framework",
+              "chats/cursor/cursor-3-design-enhancements",
+              "chats/cursor/cursor-4-code-display-enhancements",
+              "chats/cursor/cursor-5-grayscale-card-on-code",
+              "chats/cursor/cursor-6-rename-files-underscore",
+              "chats/cursor/cursor-7-mintlify-framework-troubl"
             ]
           }
         ]
@@ -86,24 +98,11 @@
     "light": "/logo/light.svg",
     "dark": "/logo/dark.svg"
   },
-  "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
-      }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
-    }
-  },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "x": "https://x.com/notifications",
+      "github": "https://trendingrepos.com/",
+      "linkedin": "https://www.inoreader.com/all_articles"
     }
   }
 }
