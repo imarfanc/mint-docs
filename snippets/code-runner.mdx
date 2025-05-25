@@ -2,7 +2,7 @@ export const CodeRunner = (props) => {
   const code = props.code;
   const language = props.language || "bash";
   const filename = props.filename;
-  
+
   const copyToClipboard = async (text) => {
     try {
       if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -11,21 +11,21 @@ export const CodeRunner = (props) => {
         throw new Error("Clipboard API not available");
       }
     } catch (err) {
-      const textArea = document.createElement('textarea');
+      const textArea = document.createElement("textarea");
       textArea.value = text;
-      textArea.style.position = 'fixed';
-      textArea.style.left = '-999999px';
-      textArea.style.top = '-999999px';
+      textArea.style.position = "fixed";
+      textArea.style.left = "-999999px";
+      textArea.style.top = "-999999px";
       document.body.appendChild(textArea);
       textArea.focus();
       textArea.select();
-      
+
       try {
-        document.execCommand('copy');
+        document.execCommand("copy");
       } catch (execErr) {
         console.error("Copy failed:", execErr);
       }
-      
+
       document.body.removeChild(textArea);
     }
   };
@@ -33,7 +33,7 @@ export const CodeRunner = (props) => {
   const runCode = async () => {
     await copyToClipboard(code);
     try {
-      window.location.href = 'kmtrigger://macro=web_2_terminal';
+      window.location.href = "kmtrigger://macro=web_2_terminal";
     } catch (err) {
       console.error("Could not trigger kmtrigger URL scheme:", err);
     }
@@ -42,19 +42,28 @@ export const CodeRunner = (props) => {
   const copyCode = async (event) => {
     event.preventDefault();
     await copyToClipboard(code);
-    
+
     const button = event.currentTarget;
     const originalContent = button.innerHTML;
-    button.innerHTML = '<Icon icon="check" size={14} color="#22c55e" /> Copied!';
-    
+    button.innerHTML =
+      '<Icon icon="check" size={14} color="#22c55e" /> Copied!';
+
     setTimeout(() => {
       button.innerHTML = originalContent;
     }, 2000);
   };
 
   const highlightCode = (code, language) => {
-    if (typeof window !== "undefined" && window.Prism && window.Prism.languages[language]) {
-      return window.Prism.highlight(code, window.Prism.languages[language], language);
+    if (
+      typeof window !== "undefined" &&
+      window.Prism &&
+      window.Prism.languages[language]
+    ) {
+      return window.Prism.highlight(
+        code,
+        window.Prism.languages[language],
+        language,
+      );
     }
     return code;
   };
@@ -65,7 +74,7 @@ export const CodeRunner = (props) => {
 
   const buttonBaseStyle = {
     display: "flex",
-    alignItems: "center", 
+    alignItems: "center",
     gap: "6px",
     padding: "8px 12px",
     fontSize: "13px",
@@ -75,7 +84,7 @@ export const CodeRunner = (props) => {
     cursor: "pointer",
     transition: "all 0.2s ease",
     backdropFilter: "blur(10px)",
-    WebkitBackdropFilter: "blur(10px)"
+    WebkitBackdropFilter: "blur(10px)",
   };
 
   const copyButtonStyle = {
@@ -94,36 +103,44 @@ export const CodeRunner = (props) => {
   const highlightedCode = highlightCode(code, language);
 
   return (
-    <div style={{ 
-      margin: "20px 0",
-      borderRadius: "12px",
-      overflow: "hidden",
-      border: "1px solid rgba(255, 255, 255, 0.1)",
-      backgroundColor: "rgba(0, 0, 0, 0.3)",
-      backdropFilter: "blur(10px)",
-      WebkitBackdropFilter: "blur(10px)",
-      boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)"
-    }}>
-      <div style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: "12px 16px",
-        backgroundColor: "rgba(255, 255, 255, 0.05)",
-        borderBottom: "1px solid rgba(255, 255, 255, 0.1)"
-      }}>
+    <div
+      id="custom-card-1"
+      style={{
+        margin: "20px 0",
+        borderRadius: "12px",
+        overflow: "hidden",
+        border: "1px solid rgba(255, 255, 255, 0.1)",
+        backgroundColor: "rgba(0, 0, 0, 0.3)",
+        backdropFilter: "blur(10px)",
+        WebkitBackdropFilter: "blur(10px)",
+        boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "6px 18px",
+          backgroundColor: "rgba(255, 255, 255, 0.05)",
+          borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
+        }}
+      >
         {filename && (
-          <span style={{ 
-            fontSize: "14px", 
-            color: "rgba(255, 255, 255, 0.8)",
-            fontWeight: "500",
-            fontFamily: "monospace"
-          }}>
+          <span
+            style={{
+              fontSize: "14px",
+              color: "rgba(255, 255, 255, 0.8)",
+              fontWeight: "500",
+              fontFamily: "monospace",
+            }}
+          >
             {filename}
           </span>
         )}
         <div style={{ display: "flex", gap: "8px", marginLeft: "auto" }}>
           <button
+            id="copy-btn"
             onClick={copyCode}
             style={copyButtonStyle}
             title="Copy code"
@@ -140,6 +157,7 @@ export const CodeRunner = (props) => {
             Copy
           </button>
           <button
+            id="run-btn"
             onClick={runCode}
             style={runButtonStyle}
             title="Copy code and run in terminal"
@@ -159,26 +177,31 @@ export const CodeRunner = (props) => {
           </button>
         </div>
       </div>
-      
-      <div style={{ padding: "16px", backgroundColor: "rgba(0, 0, 0, 0.2)" }}>
-        <pre style={{
-          margin: "0",
-          padding: "0",
-          fontSize: "14px",
-          lineHeight: "1.5",
-          fontFamily: "'JetBrains Mono', 'Fira Code', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace",
-          overflowX: "auto",
-          color: "#f8f8f2",
-          backgroundColor: "transparent"
-        }}>
-          <code 
+
+      <div
+        style={{ padding: "6px 18px", backgroundColor: "rgba(0, 0, 0, 0.2)" }}
+      >
+        <pre
+          style={{
+            margin: "0",
+            padding: "0",
+            fontSize: "14px",
+            lineHeight: "1.5",
+            fontFamily:
+              "'JetBrains Mono', 'Fira Code', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace",
+            overflowX: "auto",
+            color: "#f8f8f2",
+            backgroundColor: "transparent",
+          }}
+        >
+          <code
             className={`language-${language}`}
-            dangerouslySetInnerHTML={{ 
-              __html: highlightedCode 
+            dangerouslySetInnerHTML={{
+              __html: highlightedCode,
             }}
           />
         </pre>
       </div>
     </div>
   );
-}; 
+};
