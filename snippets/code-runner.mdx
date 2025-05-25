@@ -44,86 +44,139 @@ export const CodeRunner = (props) => {
     await copyToClipboard(code);
     
     const button = event.currentTarget;
-    const originalText = button.innerHTML;
-    button.innerHTML = 'Copied!';
+    const originalContent = button.innerHTML;
+    button.innerHTML = '<Icon icon="check" size={14} color="#22c55e" /> Copied!';
     
     setTimeout(() => {
-      button.innerHTML = originalText;
+      button.innerHTML = originalContent;
     }, 2000);
+  };
+
+  const highlightCode = (code, language) => {
+    if (typeof window !== "undefined" && window.Prism && window.Prism.languages[language]) {
+      return window.Prism.highlight(code, window.Prism.languages[language], language);
+    }
+    return code;
   };
 
   if (typeof document === "undefined") {
     return null;
   }
 
+  const buttonBaseStyle = {
+    display: "flex",
+    alignItems: "center", 
+    gap: "6px",
+    padding: "8px 12px",
+    fontSize: "13px",
+    fontWeight: "500",
+    border: "1px solid rgba(255, 255, 255, 0.1)",
+    borderRadius: "6px",
+    cursor: "pointer",
+    transition: "all 0.2s ease",
+    backdropFilter: "blur(10px)",
+    WebkitBackdropFilter: "blur(10px)"
+  };
+
+  const copyButtonStyle = {
+    ...buttonBaseStyle,
+    color: "rgba(255, 255, 255, 0.8)",
+    backgroundColor: "rgba(255, 255, 255, 0.05)",
+  };
+
+  const runButtonStyle = {
+    ...buttonBaseStyle,
+    color: "white",
+    backgroundColor: "rgba(34, 197, 94, 0.8)",
+    border: "1px solid rgba(34, 197, 94, 0.3)",
+  };
+
+  const highlightedCode = highlightCode(code, language);
+
   return (
     <div style={{ 
       margin: "20px 0",
-      backgroundColor: "#1a1a1a",
-      borderRadius: "8px",
-      overflow: "hidden"
+      borderRadius: "12px",
+      overflow: "hidden",
+      border: "1px solid rgba(255, 255, 255, 0.1)",
+      backgroundColor: "rgba(0, 0, 0, 0.3)",
+      backdropFilter: "blur(10px)",
+      WebkitBackdropFilter: "blur(10px)",
+      boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)"
     }}>
       <div style={{
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        padding: "8px 16px",
-        backgroundColor: "#2a2a2a",
-        borderBottom: "1px solid #444"
+        padding: "12px 16px",
+        backgroundColor: "rgba(255, 255, 255, 0.05)",
+        borderBottom: "1px solid rgba(255, 255, 255, 0.1)"
       }}>
         {filename && (
-          <span style={{ fontSize: "14px", color: "#ccc" }}>{filename}</span>
+          <span style={{ 
+            fontSize: "14px", 
+            color: "rgba(255, 255, 255, 0.8)",
+            fontWeight: "500",
+            fontFamily: "monospace"
+          }}>
+            {filename}
+          </span>
         )}
         <div style={{ display: "flex", gap: "8px", marginLeft: "auto" }}>
           <button
             onClick={copyCode}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "4px",
-              padding: "4px 12px",
-              fontSize: "12px",
-              color: "#ccc",
-              backgroundColor: "transparent",
-              border: "1px solid #555",
-              borderRadius: "4px",
-              cursor: "pointer"
-            }}
+            style={copyButtonStyle}
             title="Copy code"
+            onMouseEnter={(e) => {
+              e.target.style.backgroundColor = "rgba(255, 255, 255, 0.1)";
+              e.target.style.transform = "translateY(-1px)";
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = "rgba(255, 255, 255, 0.05)";
+              e.target.style.transform = "translateY(0)";
+            }}
           >
+            <Icon icon="copy" size={14} />
             Copy
           </button>
           <button
             onClick={runCode}
-            style={{
-              display: "flex",
-              alignItems: "center", 
-              gap: "4px",
-              padding: "4px 12px",
-              fontSize: "12px",
-              color: "white",
-              backgroundColor: "#22c55e",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer"
-            }}
+            style={runButtonStyle}
             title="Copy code and run in terminal"
+            onMouseEnter={(e) => {
+              e.target.style.backgroundColor = "rgba(34, 197, 94, 1)";
+              e.target.style.transform = "translateY(-1px)";
+              e.target.style.boxShadow = "0 4px 12px rgba(34, 197, 94, 0.4)";
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = "rgba(34, 197, 94, 0.8)";
+              e.target.style.transform = "translateY(0)";
+              e.target.style.boxShadow = "none";
+            }}
           >
+            <Icon icon="play" size={14} />
             Run
           </button>
         </div>
       </div>
       
-      <div>
-        <pre style={{ 
-          padding: "16px", 
-          fontSize: "14px", 
-          color: "#f1f1f1", 
-          overflowX: "auto",
+      <div style={{ padding: "16px", backgroundColor: "rgba(0, 0, 0, 0.2)" }}>
+        <pre style={{
           margin: "0",
-          backgroundColor: "#1a1a1a"
+          padding: "0",
+          fontSize: "14px",
+          lineHeight: "1.5",
+          fontFamily: "'JetBrains Mono', 'Fira Code', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace",
+          overflowX: "auto",
+          color: "#f8f8f2",
+          backgroundColor: "transparent"
         }}>
-          <code>{code}</code>
+          <code 
+            className={`language-${language}`}
+            dangerouslySetInnerHTML={{ 
+              __html: highlightedCode 
+            }}
+          />
         </pre>
       </div>
     </div>
