@@ -45,8 +45,7 @@ export const CodeRunner = (props) => {
 
     const button = event.currentTarget;
     const originalContent = button.innerHTML;
-    button.innerHTML =
-      '<Icon icon="check" size={14} color="#22c55e" /> Copied!';
+    button.innerHTML = '<Icon icon="check" size={16} color="#22c55e" />';
 
     setTimeout(() => {
       button.innerHTML = originalContent;
@@ -75,10 +74,9 @@ export const CodeRunner = (props) => {
   const buttonBaseStyle = {
     display: "flex",
     alignItems: "center",
-    gap: "6px",
-    padding: "8px 12px",
-    fontSize: "13px",
-    fontWeight: "500",
+    justifyContent: "center",
+    width: "32px",
+    height: "32px",
     border: "1px solid rgba(255, 255, 255, 0.1)",
     borderRadius: "6px",
     cursor: "pointer",
@@ -104,7 +102,7 @@ export const CodeRunner = (props) => {
 
   return (
     <div
-      id="custom-card-1"
+      className="hover:!border-primary dark:hover:!border-primary-light"
       style={{
         margin: "20px 0",
         borderRadius: "12px",
@@ -121,7 +119,7 @@ export const CodeRunner = (props) => {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          padding: "6px 18px",
+          padding: "8px 16px",
           backgroundColor: "rgba(255, 255, 255, 0.05)",
           borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
         }}
@@ -129,7 +127,7 @@ export const CodeRunner = (props) => {
         {filename && (
           <span
             style={{
-              fontSize: "14px",
+              fontSize: "13px",
               color: "rgba(255, 255, 255, 0.8)",
               fontWeight: "500",
               fontFamily: "monospace",
@@ -138,9 +136,8 @@ export const CodeRunner = (props) => {
             {filename}
           </span>
         )}
-        <div style={{ display: "flex", gap: "8px", marginLeft: "auto" }}>
+        <div style={{ display: "flex", gap: "6px", marginLeft: "auto" }}>
           <button
-            id="copy-btn"
             onClick={copyCode}
             style={copyButtonStyle}
             title="Copy code"
@@ -153,11 +150,9 @@ export const CodeRunner = (props) => {
               e.target.style.transform = "translateY(0)";
             }}
           >
-            <Icon icon="copy" size={14} />
-            Copy
+            <Icon icon="copy" size={16} />
           </button>
           <button
-            id="run-btn"
             onClick={runCode}
             style={runButtonStyle}
             title="Copy code and run in terminal"
@@ -172,14 +167,13 @@ export const CodeRunner = (props) => {
               e.target.style.boxShadow = "none";
             }}
           >
-            <Icon icon="play" size={14} />
-            Run
+            <Icon icon="play" size={16} />
           </button>
         </div>
       </div>
 
       <div
-        style={{ padding: "6px 18px", backgroundColor: "rgba(0, 0, 0, 0.2)" }}
+        style={{ padding: "16px", backgroundColor: "rgba(0, 0, 0, 0.2)" }}
       >
         <pre
           style={{
