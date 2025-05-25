@@ -31,6 +31,13 @@
               "essentials/navigation",
               "essentials/reusable-snippets"
             ]
+          },
+          {
+            "group": "web-dev",
+            "pages": [
+              "val-town",
+              "web-dev/val-town-2"
+            ]
           }
         ]
       },
