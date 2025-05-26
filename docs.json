@@ -24,22 +24,24 @@
           {
             "group": "chats",
             "icon": "messages",
-            "pages": [{
-              "group": "cursor",
-              "icon": "arrow-pointer",
-              "pages": [
-                "docs/chats/cursor/mintlify-chats/cursor-1-add-new-document",
-                "docs/chats/cursor/mintlify-chats/cursor-2-mintlify-framework",
-                "docs/chats/cursor/mintlify-chats/cursor-3-design-enhancements",
-                "docs/chats/cursor/mintlify-chats/cursor-4-code-display-enhancements",
-                "docs/chats/cursor/mintlify-chats/cursor-5-grayscale-card-on-code",
-                "docs/chats/cursor/mintlify-chats/cursor-6-rename-files-underscore",
-                "docs/chats/cursor/mintlify-chats/cursor-7-mintlify-framework-troubl",
-                "docs/chats/cursor/mintlify-chats/cursor-8-json-modifications-for-api-doc",
-                "docs/chats/cursor/mintlify-chats/cursor-9-api-reserved-path-error-troubles",
-                "docs/chats/cursor/mintlify-chats/cursor-10-documentation-updates-and-ui"
-              ]
-            }]
+            "pages": [
+              {
+                "group": "cursor",
+                "icon": "arrow-pointer",
+                "pages": [
+                  "docs/chats/cursor/mintlify-chats/cursor-1-add-new-document",
+                  "docs/chats/cursor/mintlify-chats/cursor-2-mintlify-framework",
+                  "docs/chats/cursor/mintlify-chats/cursor-3-design-enhancements",
+                  "docs/chats/cursor/mintlify-chats/cursor-4-code-display-enhancements",
+                  "docs/chats/cursor/mintlify-chats/cursor-5-grayscale-card-on-code",
+                  "docs/chats/cursor/mintlify-chats/cursor-6-rename-files-underscore",
+                  "docs/chats/cursor/mintlify-chats/cursor-7-mintlify-framework-troubl",
+                  "docs/chats/cursor/mintlify-chats/cursor-8-json-modifications-for-api-doc",
+                  "docs/chats/cursor/mintlify-chats/cursor-9-api-reserved-path-error-troubles",
+                  "docs/chats/cursor/mintlify-chats/cursor-10-documentation-updates-and-ui"
+                ]
+              }
+            ]
           },
           {
             "group": "Default",
@@ -84,11 +86,13 @@
             "icon": "computer",
             "pages": [
               "docs-2/digital-Apps/macOS for beginners",
-              "docs-2/digital-Apps/vscode-shortcuts"
+              "docs-2/digital-Apps/vscode-shortcuts",
+              "docs-2/digital-Apps/install-nvm",
+              "docs-2/digital-Apps/install-conda"
             ]
           }
         ],
-        "_comment_end": "end of main docs ——————————————————————————————————————————————————"
+        "_comment_end": "end of docs 2 ——————————————————————————————————————————————————"
       },
       {
         "tab": "Summer Notes API",
@@ -104,7 +108,7 @@
             "group": "Notes Endpoints",
             "pages": [
               "api-docs/notes/get-all-notes",
-              "api-docs/notes/get-filtered-notes", 
+              "api-docs/notes/get-filtered-notes",
               "api-docs/notes/create-note",
               "api-docs/notes/update-note",
               "api-docs/notes/archive-note",

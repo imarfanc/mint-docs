@@ -1,0 +1,126 @@
+---
+title: "install nvm"
+description: "Guide for installing nvm (Node Version Manager) to manage multiple Node.js versions"
+---
+
+---
+
+## Installing nvm
+
+### Step 1: Install nvm
+
+`nvm` (Node Version Manager) lets you install and manage multiple Node.js versions easily.
+
+https://nodejs.org/en/download
+
+Install nvm using the official install script:
+
+```bash
+# Download and install nvm:
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+
+# in lieu of restarting the shell
+\. "$HOME/.nvm/nvm.sh"
+
+# Download and install Node.js:
+nvm install 24
+
+# Verify the Node.js version:
+node -v # Should print "v24.1.0".
+nvm current # Should print "v24.1.0".
+
+# Verify npm version:
+npm -v # Should print "11.3.0".
+```
+
+After installation, add the following to your shell profile (`~/.bashrc`, `~/.zshrc`, etc.):
+
+```bash
+\. "$HOME/.nvm/nvm.sh"
+```
+
+Restart your terminal or run the above manually, then verify:
+
+```bash
+nvm --version
+```
+
+### Step 2: Install Node.js
+
+Once `nvm` is set up, install the latest LTS version of Node.js:
+
+```bash
+nvm install --lts
+nvm use --lts
+```
+
+Verify:
+
+```bash
+node --version
+npm --version
+```
+
+install latest npm:
+
+```bash
+# npm install -g npm@11.4.1
+npm install -g npm@latest
+```
+
+---
+
+# install mintlify
+
+```bash
+npm i -g mintlify
+```
+
+---
+
+## Installing Deno
+
+[Deno](https://deno.com) is a modern runtime for JavaScript and TypeScript.
+
+Install Deno with this command:
+
+```bash
+curl -fsSL https://deno.land/install.sh | sh
+
+```
+
+Ensure `~/.deno/bin` is in your PATH. Add to your shell config:
+
+```bash
+# deno script will ask you to add the following to your shell profile:
+```
+
+Then verify:
+
+```bash
+deno --version
+```
+
+---
+
+## Installing Go
+
+Install Go (Golang) using the official tarball:
+
+```bash
+curl -LO https://go.dev/dl/go1.22.3.linux-amd64.tar.gz
+sudo rm -rf /usr/local/go
+sudo tar -C /usr/local -xzf go1.22.3.linux-amd64.tar.gz
+```
+
+Add Go to your shell profile:
+
+```bash
+export PATH=$PATH:/usr/local/go/bin
+```
+
+Verify:
+
+```bash
+go version
+```

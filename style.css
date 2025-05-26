@@ -1,15 +1,25 @@
 h2 {
     margin-left: 2em;
-  }
-  
-  h3 {
+    font-style: italic;
+    color: #0D9373;
+}
+
+h3 {
+    margin-left: 3em;
+    font-style: italic;
+    color: #0D9373;
+    text-decoration: underline;
+    text-align: center;
+}
+
+h4 {
     margin-left: 4em;
-  }
-  
-  h4 {
-    margin-left: 6em;
-  }
-  
-  p {
+    font-style: italic;
+    color: #0D9373;
+    text-decoration: underline;
+    text-align: center;
+}
+
+p {
     margin-left: 1em;
-  }
+}

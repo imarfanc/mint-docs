@@ -1,5 +1,7 @@
 {
   "workbench.colorTheme": "Zone Green",
+  "workbench.sideBar.location": "right",
+  "terminal.integrated.cursorStyle": "line",
   "[json]": {
     "editor.formatOnSave": true
   },
