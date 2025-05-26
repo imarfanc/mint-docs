@@ -1,0 +1,20 @@
+{
+  "workbench.colorTheme": "Zone Green",
+  "[json]": {
+    "editor.formatOnSave": true
+  },
+  "fileGroup.groups": {
+    "mdx-files-current": {
+      "files": [
+        "/Users/arfan/Developer/local/git_clones/mint-docs/docs-2/macOS for beginners.mdx",
+        "/Users/arfan/Developer/local/git_clones/mint-docs/docs-2/examples.mdx"
+      ]
+    },
+    "json-files": {
+      "files": [
+        "/Users/arfan/Developer/local/git_clones/mint-docs/README.md",
+        "/Users/arfan/Developer/local/git_clones/mint-docs/docs.json"
+      ]
+    }
+  }
+}

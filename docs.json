@@ -78,8 +78,17 @@
             "pages": [
               "docs-2/examples"
             ]
+          },
+          {
+            "group": "Digital Apps",
+            "icon": "computer",
+            "pages": [
+              "docs-2/digital-Apps/macOS for beginners",
+              "docs-2/digital-Apps/vscode-shortcuts"
+            ]
           }
-        ]
+        ],
+        "_comment_end": "end of main docs ——————————————————————————————————————————————————"
       },
       {
         "tab": "Summer Notes API",
