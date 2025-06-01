@@ -1,0 +1,81 @@
+export const Checkbox = (props) => {
+  const [isChecked, setIsChecked] = React.useState(props.checked || false);
+  const label = props.label || "";
+  const disabled = props.disabled || false;
+
+  const handleChange = () => {
+    if (!disabled) {
+      const newChecked = !isChecked;
+      setIsChecked(newChecked);
+      if (props.onChange) {
+        props.onChange(newChecked);
+      }
+    }
+  };
+
+  return (
+    <label 
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "8px",
+        cursor: disabled ? "not-allowed" : "pointer",
+        opacity: disabled ? 0.6 : 1,
+        fontSize: "16px",
+        lineHeight: "1.5",
+        color: "#f8f8f2",
+        userSelect: "none",
+        paddingLeft: "40px",
+        marginBottom: "12px",
+        fontStyle: "italic"
+      }}
+      onClick={handleChange}
+    >
+      <div
+        style={{
+          position: "relative",
+          width: "24px",
+          height: "24px",
+          borderRadius: "4px",
+          border: isChecked ? "2px solid #0D9373" : "2px solid rgba(255, 255, 255, 0.3)",
+          backgroundColor: isChecked ? "#0D9373" : "transparent",
+          transition: "all 0.2s ease",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
+        }}
+      >
+        {isChecked && (
+          <svg
+            width="12"
+            height="12"
+            viewBox="0 0 12 12"
+            fill="none"
+            style={{
+              color: "white"
+            }}
+          >
+            <path
+              d="M10 3L4.5 8.5L2 6"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        )}
+      </div>
+      <span 
+        style={{
+          textDecoration: isChecked ? "line-through" : "none",
+          color: isChecked ? "#888888" : "#f8f8f2",
+          transition: "all 0.2s ease"
+        }}
+      >
+        {label}
+      </span>
+    </label>
+  );
+};
+
+ 
