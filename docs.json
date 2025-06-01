@@ -18,8 +18,8 @@
             "group": "reset-macOS",
             "icon": "computer",
             "pages": [
-              "docs/reset-macOS/1",
-              "docs/reset-macOS/2",
+              "docs/reset-macOS/1-1",
+              "docs/reset-macOS/1.2",
               "docs/reset-macOS/3"
             ]
           },

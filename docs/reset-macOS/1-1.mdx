@@ -1,0 +1,111 @@
+---
+title: Reset macOS & Prepare for Development (Beginner Guide)
+desc: How to reset macOS and prepare for development
+icon: '1'
+---
+
+import { CodeRunner } from '/snippets/code-runner.mdx';
+
+## 1. Backup Your Data (Mandatory!)
+1. Connect an external drive (bigger than your Mac's storage)
+2. Go to > System Settings > General > Time Machine
+3. Click "Add Backup Disk" and follow prompts
+4. Wait until backup completes before proceeding
+
+---
+
+## 2. Reset macOS (Erase & Reinstall)
+### Enter Recovery Mode:
+1. Shut down Mac ( > Shut Down)
+2. Hold (**Power button + ⌘ Command + R**) together immediately after turning on
+3. Release when Apple logo appears (may take 5 minutes)
+
+### Erase Your Disk:
+4. Select "Disk Utility" > Continue  
+5. In sidebar:  
+   - Select "Macintosh HD" (top item, under "Internal")  
+   - Click "Erase" (top toolbar)  
+6. Configure:  
+   - **Name:** `Macintosh HD`  
+   - **Format:** `APFS` (default for modern Macs)  
+   - **Scheme:** `GUID Partition Map`  
+7. Confirm with "Erase Volume Group"  
+8. Close Disk Utility when done
+
+### Reinstall macOS:
+9. Back in Utilities, choose "Reinstall macOS"  
+10. Follow prompts (installation takes 20-60 minutes)  
+11. Mac will restart automatically when done
+
+---
+
+## 3. Fast Setup (Skip Unnecessary Steps)
+At the Welcome Screen:  
+1. **Country/Region:** Select yours → Continue  
+2. **Language:** Keep defaults → Continue  
+3. **Accessibility:** "Not Now" → Continue  
+4. **Wi-Fi:** Connect to internet (required!)  
+5. **Data & Privacy:** Continue  
+6. **Migration Assistant:** "Not Now"  
+7. **Apple ID:** "Set Up Later" → "Skip" (you'll add later)  
+8. **Terms & Conditions:** Agree → Continue  
+9. **Create Admin Account:**  
+   - Full Name: Your name  
+   - Account Name: Auto-generated (keep it simple)  
+   - Password: Use something memorable (write it down!)  
+   - Uncheck "Set up with Touch ID" (save time)  
+10. **Location Services:** Uncheck → "Continue" → "Don't Use"  
+11. **Analytics:** Uncheck both → Continue  
+12. **Screen Time:** "Set Up Later"  
+13. **Siri:** "Set Up Later" or uncheck → Continue  
+14. **Appearance:** Choose Light/Dark → Continue  
+
+**You're now at the desktop!**
+
+---
+
+## 4. Open Apps via Terminal (Developer Quickstart)
+1. Press **⌘ Command + Space**  
+2. Type `Terminal` → Press Enter  
+3. Copy/paste this command (it opens 4 apps at once):
+
+```bash
+open -a Safari
+open -a Clock
+open -a Notes
+open -a "Activity Monitor"
+```
+
+<CodeRunner 
+  code={`open -a Safari
+open -a Clock
+open -a Notes
+open -a "Activity Monitor"`}
+  language="bash"
+/>
+
+**Press Enter** - all apps will launch simultaneously!
+
+---
+
+### Next Steps for Developers
+1. Install Xcode from App Store (essential for macOS dev)
+2. Install Homebrew (package manager):
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+3. Configure Git:
+```bash
+git config --global user.name "Your Name"
+git config --global user.email "your@email.com"
+```
+
+### Pro Tips
+- Use `⌘ Command + Tab` to switch between open apps  
+- Safari is pre-logged into Apple services (App Store, iCloud)  
+- Activity Monitor shows running processes (like Task Manager on Windows)  
+- You can sign into Apple ID later in > System Settings > Apple ID
+
+---
+
+This process takes 60-90 minutes total. You'll have a clean, bloatware-free macOS installation ready for development tools!
