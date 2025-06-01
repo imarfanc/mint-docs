@@ -15,57 +15,19 @@
         "tab": "main docs",
         "groups": [
           {
+            "group": "reset-macOS",
+            "icon": "computer",
+            "pages": [
+              "docs/reset-macOS/1",
+              "docs/reset-macOS/2"
+            ]
+          },
+          {
             "group": "web-dev",
             "icon": "newspaper",
             "pages": [
-              "docs/web-dev/val-town"
-            ]
-          },
-          {
-            "group": "chats",
-            "icon": "messages",
-            "pages": [
-              {
-                "group": "cursor",
-                "icon": "arrow-pointer",
-                "pages": [
-                  "docs/chats/cursor/mintlify-chats/cursor-1-add-new-document",
-                  "docs/chats/cursor/mintlify-chats/cursor-2-mintlify-framework",
-                  "docs/chats/cursor/mintlify-chats/cursor-3-design-enhancements",
-                  "docs/chats/cursor/mintlify-chats/cursor-4-code-display-enhancements",
-                  "docs/chats/cursor/mintlify-chats/cursor-5-grayscale-card-on-code",
-                  "docs/chats/cursor/mintlify-chats/cursor-6-rename-files-underscore",
-                  "docs/chats/cursor/mintlify-chats/cursor-7-mintlify-framework-troubl",
-                  "docs/chats/cursor/mintlify-chats/cursor-8-json-modifications-for-api-doc",
-                  "docs/chats/cursor/mintlify-chats/cursor-9-api-reserved-path-error-troubles",
-                  "docs/chats/cursor/mintlify-chats/cursor-10-documentation-updates-and-ui"
-                ]
-              }
-            ]
-          },
-          {
-            "group": "Default",
-            "icon": "house",
-            "pages": [
-              {
-                "group": "Get Started",
-                "pages": [
-                  "docs/introduction",
-                  "docs/quickstart",
-                  "docs/development"
-                ]
-              },
-              {
-                "group": "Essentials",
-                "pages": [
-                  "docs/essentials/markdown",
-                  "docs/essentials/code",
-                  "docs/essentials/images",
-                  "docs/essentials/settings",
-                  "docs/essentials/navigation",
-                  "docs/essentials/reusable-snippets"
-                ]
-              }
+              "docs/web-dev/val-town",
+              "docs/web-dev/nuxt-daisyui"
             ]
           }
         ],
@@ -89,6 +51,51 @@
               "docs-2/digital-Apps/vscode-shortcuts",
               "docs-2/digital-Apps/install-nvm",
               "docs-2/digital-Apps/install-conda"
+            ]
+          },
+          {
+            "group": "chats",
+            "icon": "messages",
+            "pages": [{
+              "group": "cursor",
+              "icon": "arrow-pointer",
+              "pages": [
+                "docs-2/chats/cursor/mintlify-chats/cursor-1-add-new-document",
+                "docs-2/chats/cursor/mintlify-chats/cursor-2-mintlify-framework",
+                "docs-2/chats/cursor/mintlify-chats/cursor-3-design-enhancements",
+                "docs-2/chats/cursor/mintlify-chats/cursor-4-code-display-enhancements",
+                "docs-2/chats/cursor/mintlify-chats/cursor-5-grayscale-card-on-code",
+                "docs-2/chats/cursor/mintlify-chats/cursor-6-rename-files-underscore",
+                "docs-2/chats/cursor/mintlify-chats/cursor-7-mintlify-framework-troubl",
+                "docs-2/chats/cursor/mintlify-chats/cursor-8-json-modifications-for-api-doc",
+                "docs-2/chats/cursor/mintlify-chats/cursor-9-api-reserved-path-error-troubles",
+                "docs-2/chats/cursor/mintlify-chats/cursor-10-documentation-updates-and-ui"
+              ]
+            }]
+          },
+          {
+            "group": "Default",
+            "icon": "house",
+            "pages": [
+              {
+                "group": "Get Started",
+                "pages": [
+                  "docs-2/default/get-started/introduction",
+                  "docs-2/default/get-started/quickstart",
+                  "docs-2/default/get-started/development"
+                ]
+              },
+              {
+                "group": "Essentials",
+                "pages": [
+                  "docs-2/default/essentials/markdown",
+                  "docs-2/default/essentials/code",
+                  "docs-2/default/essentials/images",
+                  "docs-2/default/essentials/settings",
+                  "docs-2/default/essentials/navigation",
+                  "docs-2/default/essentials/reusable-snippets"
+                ]
+              }
             ]
           }
         ],
