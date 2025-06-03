@@ -1,0 +1,321 @@
+---
+title: Reset macOS & Prepare for Development (Complete Guide 2)
+desc: How to reset macOS and prepare for development
+icon: '3'
+---
+
+import { CodeRunner } from '/snippets/code-runner.mdx';
+import { Checkbox } from '/snippets/checkbox.mdx';
+
+## Overview of Changes in macOS 15 “Sequoia”
+
+* **Recovery Mode Entry (Sequoia)**:
+
+  * On **Apple Silicon** (M1/M2/M3), you hold down the Power button until “Loading Startup Options” appears, then select **Options → Continue** to enter Recovery Mode ([iBoysoft][1]).
+  * On **Intel-based** Macs, you still restart and hold **⌘ Command + R** until the Apple logo appears to enter Recovery Mode ([Apple Support][2]).
+
+* **Default Shell: zsh**:
+
+  * Since macOS Catalina (10.15), Apple replaced Bash with **zsh** as the default login and interactive shell ([Ask Different][3], [Wikipedia][4]). Sequoia continues using zsh by default.
+
+* **Checklists**:
+
+  * At the end of each major section, you’ll find a Markdown checkbox (`- [ ] …`) so you can mark tasks complete as you go.
+
+---
+
+## 1. Backup Your Data (Mandatory!)
+
+1. **Connect an External Drive**: Ensure it’s at least as large as your Mac’s internal storage.
+2. **Open Time Machine**: Go to **Apple menu → System Settings → General → Time Machine** ([Apple Support][2]).
+3. **Select Backup Disk**: Click **“Add Backup Disk…”** and choose your external drive.
+4. **Wait for Backup to Finish**: Don’t proceed until Time Machine’s initial backup completes.
+
+<Checkbox label="Backup Your Data completed" checked={false} />
+
+---
+
+## 2. Reset macOS 15 (Erase & Reinstall)
+
+### 2.1 Enter Recovery Mode
+
+* **Apple Silicon (M1/M2/M3)**:
+
+  1. Shut down your Mac.
+  2. Press and hold the **Power button** until you see “Loading Startup Options.”
+  3. Select **Options**, then click **Continue** to load the Recovery environment ([iBoysoft][1]).
+
+* **Intel-Based Macs**:
+
+  1. Shut down or restart your Mac.
+  2. Immediately hold **⌘ Command + R** until the Apple logo appears.
+  3. Release the keys when you see the macOS Recovery utilities window ([Apple Support][2], [iBoysoft][1]).
+
+### 2.2 Erase Your Disk
+
+1. In the Recovery app window, select **Disk Utility** and click **Continue** ([Apple Support][2]).
+2. In Disk Utility’s sidebar, choose **Macintosh HD** (or whatever you named your startup volume).
+3. Click **Erase** (or **Erase Volume Group** if shown) ([Apple Support][2]).
+4. Set:
+
+   * **Name:** `Macintosh HD`
+   * **Format:** `APFS`
+   * **Scheme:** `GUID Partition Map` (on Intel) or simply APFS on Apple Silicon ([Apple Support][2]).
+5. Confirm by clicking **Erase** (or **Erase Volume Group**).
+
+### 2.3 Reinstall macOS Sequoia
+
+1. After erasing, quit Disk Utility to return to the Recovery utilities.
+2. Select **Reinstall macOS Sequoia** (it may display as “Reinstall macOS”) and click **Continue** ([Apple Support][2], [iBoysoft][1]).
+3. Follow the on-screen prompts—macOS will download a fresh copy of Sequoia and install (this can take 20–60 minutes depending on your connection).
+
+<Checkbox label="Erase & Reinstall completed" checked={false} />
+
+---
+
+## 3. Fast Setup (Skip Unnecessary Steps)
+
+Immediately after installation, you’ll see Sequoia’s Setup Assistant. To minimize distractions:
+
+1. **Country/Region**: Select yours and click **Continue**.
+2. **Wi-Fi**: Connect to your network (required for signing in and software updates).
+3. **Data Migration**: Choose **“Not Now”** if you want a clean slate.
+4. **Apple ID**: Click **“Set Up Later” → Skip**.
+5. **Create Admin Account**: Provide your name, account name, and password. Uncheck **Touch ID** until after initial configuration.
+6. **Location Services**: Deselect or click **“Don’t Use”**.
+7. **Analytics & Usage**: Uncheck both “Share Analytics” and “Share With App Developers.”
+8. **Siri**: Choose **“Set Up Later”** → Continue.
+
+After that, you should see your new desktop—no extra accounts or old files.
+
+<Checkbox label="Fast Setup completed" checked={false} />
+
+---
+
+## 4. Terminal Quickstart & zsh Configuration
+
+### 4.1 Launch Terminal
+
+* Press **⌘ Command + Space**, type `Terminal`, and press **Enter**. Since Sequoia uses **zsh** by default, you’ll be dropped into a `zsh` prompt (`%`). ([Ask Different][3], [Wikipedia][4]).
+
+### 4.2 Basic zsh Customization
+
+1. **Create `~/.zshrc`** (if it doesn’t exist):
+
+   ```bash
+   touch ~/.zshrc
+   ```
+2. **Open `~/.zshrc`** in a text editor (e.g., `nano ~/.zshrc`).
+3. **Add Common Aliases & PATH Adjustments**:
+
+   ```zsh
+   # Set up Homebrew in PATH for Apple Silicon; adjust if on Intel
+   if [[ -d /opt/homebrew/bin ]]; then
+     export PATH="/opt/homebrew/bin:$PATH"
+   else
+     export PATH="/usr/local/bin:$PATH"
+   fi
+
+   # Prompt customization (optional)
+   autoload -Uz promptinit
+   promptinit
+   prompt adam1
+
+   # Example aliases
+   alias ll='ls -lah'
+   alias code='open -a "Visual Studio Code"'
+   ```
+4. **Save & Exit** (`Ctrl + O`, **Enter**, then `Ctrl + X` in `nano`).
+5. **Apply Changes**:
+
+   ```bash
+   source ~/.zshrc
+   ```
+
+   You should now see your new prompt theme and have aliases available ([Wikipedia][4]).
+
+### 4.3 Suppressing Bash Deprecation Warnings (Optional)
+
+If you ever invoke Bash (e.g., via `bash`), you’ll see a message reminding you that zsh is now default. To silence that message when running Bash interactively:
+
+```bash
+echo 'export BASH_SILENCE_DEPRECATION_WARNING=1' >> ~/.zshrc
+source ~/.zshrc
+```
+
+This sets the environment variable so that invoking Bash won’t repeatedly show the “default shell is now zsh” warning ([Ask Different][3]).
+
+### 4.4 Quick Launch Common Apps (Example zsh Function)
+
+Add a helper function to `~/.zshrc` to open frequently used apps in one command:
+
+```zsh
+function quickstart() {
+  open -a Safari
+  open -a Notes
+  open -a "Activity Monitor"
+}
+```
+
+After saving and `source ~/.zshrc`, run:
+
+```bash
+quickstart
+```
+
+This opens Safari, Notes, and Activity Monitor simultaneously .
+
+<Checkbox label="Terminal & zsh Configuration completed" checked={false} />
+
+---
+
+## 5. Development Environment Setup
+
+### 5.1 Install Homebrew & Core Tools (zsh-Friendly)
+
+In **zsh**, paste the following to install Homebrew and essential CLI tools:
+
+```zsh
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# After Homebrew is installed, ensure its path is loaded
+if [[ -d /opt/homebrew/bin ]]; then
+  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zshrc
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -d /usr/local/bin ]]; then
+  echo 'eval "$(/usr/local/bin/brew shellenv)"' >> ~/.zshrc
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
+
+# Install essential command-line tools
+brew install git python node
+```
+
+* **Git**: for version control.
+* **Python**: scripting and automation.
+* **Node.js**: JavaScript runtime.
+
+> Note: On **Apple Silicon**, Brew installs into `/opt/homebrew/bin`; on **Intel**, it’s usually `/usr/local/bin` ([Wikipedia][4], [Microsoft Learn][5]).
+
+### 5.2 Install GUI Applications
+
+From the same zsh prompt, run:
+
+```zsh
+brew install --cask warp
+brew install --cask miniconda
+brew install --cask google-chrome
+```
+
+* **Warp**: modern terminal alternative.
+* **Miniconda**: Python environment manager.
+* **Google Chrome**: web browser.
+
+<Checkbox label="Core Tools & GUI Installed" checked={false} />
+
+### 5.3 Git Configuration
+
+In zsh, set your Git identity:
+
+```zsh
+git config --global user.name "Your Name"
+git config --global user.email "your@email.com"
+```
+
+Verify by running `git config --list` ([Wikipedia][4]).
+
+<Checkbox label="Git Configured" checked={false} />
+
+### 5.4 Create Development Folders
+
+```zsh
+mkdir -p ~/Developer/{projects,scripts,backups}
+```
+
+This yields:
+
+* `~/Developer/projects`
+* `~/Developer/scripts`
+* `~/Developer/backups`
+
+<Checkbox label="Folder Structure Created" checked={false} />
+
+---
+
+## 6. Post-Install Pro Tips
+
+1. **Enable Firewall**:
+
+   * Go to **System Settings → Network → Firewall** (Sequoia moves some settings around; search “Firewall” if you don’t see it immediately).
+   * Turn **Firewall** on and configure “Block all incoming connections” as desired ([Apple Support][2], [iBoysoft][1]).
+
+2. **Install Xcode Command-Line Tools**:
+
+   ```bash
+   xcode-select --install
+   ```
+
+   This is required for compilers and certain Homebrew packages ([Wikipedia][4], [iBoysoft][1]).
+
+3. **Configure Time Machine for Regular Backups**:
+
+   * Return to **System Settings → General → Time Machine**.
+   * Enable **“Back Up Automatically”** and choose your backup disk.
+
+4. **Keyboard Shortcuts**:
+
+   * **⌘ Command + Space**: Spotlight.
+   * **⌘ Command + Tab**: App switcher.
+   * **⌃ Control + ⌘ Command + Q**: Lock screen immediately ([Apple Support][2], [iBoysoft][1]).
+
+5. **Check for System Updates**:
+
+   * Go to **System Settings → General → Software Update**.
+   * Always keep Sequoia patched (it’s a \~12 GB download initially, plus \~4 GB for CLI tools over time).
+
+<Checkbox label="Post-Install Pro Tips Reviewed" checked={false} />
+
+---
+
+## 7. Final Checklist & Estimated Timeline
+
+* Total time to complete this process: approximately **60–90 minutes** (this includes downloading Sequoia, installing tools, and configuring zsh).
+
+Below is the final summary checklist. Mark each item as you go:
+
+**Final Checklist:**
+
+<div>
+  <Checkbox label="Backup Your Data" checked={false} />
+  <Checkbox label="Erase & Reinstall macOS Sequoia" checked={false} />
+  <Checkbox label="Fast Setup (Skip Unnecessary Steps)" checked={false} />
+  <Checkbox label="Terminal & zsh Configuration" checked={false} />
+  <Checkbox label="Core Tools & GUI Installed" checked={false} />
+  <Checkbox label="Git Configured" checked={false} />
+  <Checkbox label="Folder Structure Created" checked={false} />
+  <Checkbox label="Post-Install Pro Tips Reviewed" checked={false} />
+</div>
+
+Once **all** boxes are checked, you’ll have a **fresh, zsh-powered, Sequoia-ready development environment**! 🚀
+
+---
+
+### References
+
+1. **Erase & Reinstall macOS**: Apple Support “Erase and reinstall macOS” ([Apple Support][2])
+2. **Clean Install Sequoia**: iBoysoft “How to clean install macOS Sequoia” ([iBoysoft][1])
+3. **zsh Default Shell**: Apple Support kb “HT208050” & Wikipedia “Z shell” ([Ask Different][3], [Wikipedia][4])
+4. **Recovery Mode (Intel vs Apple Silicon)**: iBoysoft & Donemax “Two Methods to Reinstall macOS Sequoia” ([iBoysoft][1], [Donemax][6], [Apple Support][2])
+5. **PowerShell on macOS 15** (confirms Sequoia support): Microsoft Documentation ([Microsoft Learn][5])
+6. **Suppressing Zsh Warnings**: StackOverflow “Suppressing the default interactive shell is now zsh” ([Ask Different][3])
+7. **Proper Homebrew Path for zsh**: Wikipedia “Z shell” & AlvinWanJala Blog “Switch from zsh to bash” ([Wikipedia][4], [alvinwanjala.com][7])
+
+If you have questions about any of these steps—especially around Recovery Mode or zsh configuration—feel free to ask!
+
+[1]: https://iboysoft.com/howto/clean-install-macos-sequoia-on-mac.html?utm_source=chatgpt.com "Clean Install macOS 15 Sequoia on Mac (Intel & Apple Silicon)"
+[2]: https://support.apple.com/guide/mac-help/erase-and-reinstall-macos-mh27903/mac?utm_source=chatgpt.com "Erase and reinstall macOS - Apple Support"
+[3]: https://apple.stackexchange.com/questions/371997/suppressing-the-default-interactive-shell-is-now-zsh-message-in-macos-catalina?utm_source=chatgpt.com "Suppressing \"The default interactive shell is now zsh\" message in ..."
+[4]: https://en.wikipedia.org/wiki/Z_shell?utm_source=chatgpt.com "Z shell"
+[5]: https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-macos?view=powershell-7.5&utm_source=chatgpt.com "Installing PowerShell on macOS - Learn Microsoft"
+[6]: https://www.donemax.com/mac-tips/how-to-reinstall-macos-sequoia.html?srsltid=AfmBOor6vWiCnYlKNHDN1dyXtonaW2Dv0dBxkQoZihFqWRLjdcVOzRCg&utm_source=chatgpt.com "Two Methods to Reinstall macOS Sequoia on Mac"
+[7]: https://alvinwanjala.com/blog/set-bash-default-macos-shell/?utm_source=chatgpt.com "How To Change Your Default Shell From Zsh To Bash on Mac"

@@ -1,0 +1,261 @@
+---
+title: py-test
+desc: How to test python
+icon: 'testtube'
+---
+
+## 1. install miniconda
+
+### for arm64
+download & install the .sh installer by running the following:
+
+```bash
+curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh
+bash ~/Miniconda3-latest-MacOSX-arm64.sh
+```
+
+- enter `yes` to agree to the TOS
+
+- press `RETURN` to accept the default install location (`PREFIX=/Users/<USER>/miniconda3`)
+
+- choose an initialization options:
+
+  - `Yes` - conda modifies your shell configuration to initialize conda whenever you open a new shell and to recognize conda commands automatically.
+  - `No` - conda will not modify your shell scripts. After installation, if you want to initialize, you must do so manually. For more information, see Manual shell initialization.
+
+- the installer finishes and displays, “Thank you for installing Miniconda3!”
+
+= Close and re-open your terminal window for the installation to fully take effect, or use the following command to refresh the terminal:
+
+```bash
+source ~/.zshrc
+```
+
+You should see (base) in the command line prompt. This tells you that you’re in your base conda environment. To learn more about environments, see Environments.
+
+Test your installation by running conda list. If conda has been installed correctly, a list of installed packages appears.
+
+## test py file
+
+```bash
+cd ~/Developer/shell
+touch py-test.py
+nano py-test.py
+```
+
+```python
+#!/usr/bin/env python3
+"""
+generate_directory_listing.py
+
+Scans the current directory (ignoring common artifacts), computes summary statistics,
+and outputs a styled HTML file (directory_listing.html) using DaisyUI’s "retro" theme.
+Includes:
+  - Summary table (generated on, #folders, #files, total size, oldest, largest)
+  - File-type counts table
+  - Collapsible nested directory list styled as a DaisyUI menu
+"""
+
+import os
+import datetime
+import html
+import mimetypes
+
+# ----------------------------------------------------------------------
+# CONFIGURATION
+# ----------------------------------------------------------------------
+
+OUTPUT_FILENAME = "directory_listing.html"
+PAGE_TITLE = "Directory Listing"
+IGNORE = {
+  ".DS_Store",
+  ".git",
+  # ".venv",
+  "__pycache__",
+}
+
+# ----------------------------------------------------------------------
+# HELPERS
+# ----------------------------------------------------------------------
+
+def human_readable_size(size_bytes: int) -> str:
+    for unit in ("B", "KB", "MB", "GB", "TB"):
+        if size_bytes < 1024:
+            return f"{size_bytes:.2f} {unit}"
+        size_bytes /= 1024
+    return f"{size_bytes:.2f} PB"
+
+def describe_extension(ext: str) -> str:
+    ext = ext.lower()
+    if not ext:
+        return "No Extension"
+    common = {
+        ".txt": "Text Document", ".md": "Markdown Document",
+        ".markdown": "Markdown Document", ".py": "Python Script",
+        ".pyw": "Python Script", ".js": "JavaScript File",
+        ".html": "HTML Document", ".htm": "HTML Document",
+        ".css": "CSS Stylesheet", ".json": "JSON File",
+        ".csv": "CSV File", ".xml": "XML File"
+    }
+    if ext in common:
+        return common[ext]
+    mime, _ = mimetypes.guess_type("file" + ext)
+    if mime:
+        main = mime.split("/")[0]
+        return {
+            "text": "Text Document",
+            "image": "Image File",
+            "application/pdf": "PDF Document"
+        }.get(mime, f"{mime}")
+    return f"{ext.strip('.').upper()} File"
+
+def gather_metrics(root: str) -> dict:
+    folders = files = total = 0
+    oldest_time, oldest_path = float("inf"), None
+    largest_size, largest_path = 0, None
+    ext_counts = {}
+
+    for dirpath, dirnames, filenames in os.walk(root):
+        dirnames[:] = [d for d in dirnames if d not in IGNORE]
+        folders += len(dirnames)
+        for name in filenames:
+            if name in IGNORE:
+                continue
+            files += 1
+            ext = os.path.splitext(name)[1]
+            ext_counts[ext] = ext_counts.get(ext, 0) + 1
+            path = os.path.join(dirpath, name)
+            try:
+                size = os.path.getsize(path)
+                total += size
+                if size > largest_size:
+                    largest_size, largest_path = size, os.path.relpath(path, root)
+                mtime = os.path.getmtime(path)
+                if mtime < oldest_time:
+                    oldest_time, oldest_path = mtime, os.path.relpath(path, root)
+            except (OSError, PermissionError):
+                continue
+
+    return {
+        "folder_count": folders,
+        "file_count": files,
+        "total_size": total,
+        "oldest_file": oldest_path or "N/A",
+        "oldest_mtime": oldest_time if oldest_path else None,
+        "largest_file": largest_path or "N/A",
+        "largest_size": largest_size,
+        "ext_counts": ext_counts,
+    }
+
+def build_dir_list(path: str) -> str:
+    """Recursively build a collapsible DaisyUI menu for the directory tree."""
+    def recurse(p: str) -> str:
+        try:
+            entries = sorted(os.listdir(p), key=str.lower)
+        except PermissionError:
+            return ""
+        items = []
+        for e in entries:
+            if e in IGNORE:
+                continue
+            full = os.path.join(p, e)
+            label = html.escape(e)
+            if os.path.isdir(full):
+                subtree = recurse(full)
+                items.append(
+                    f"<li>\n"
+                    f"  <details>\n"
+                    f"    <summary>{label}/</summary>\n"
+                    f"    <ul>{subtree}</ul>\n"
+                    f"  </details>\n"
+                    f"</li>"
+                )
+            else:
+                items.append(f"<li><a>{label}</a></li>")
+        return "\n".join(items)
+    body = recurse(path)
+    return f'<ul class="menu bg-base-200 rounded-box w-56">\n{body}\n</ul>'
+
+# ----------------------------------------------------------------------
+# GENERATE HTML
+# ----------------------------------------------------------------------
+
+def main():
+    root = os.getcwd()
+    metrics = gather_metrics(root)
+    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    total_hr = human_readable_size(metrics["total_size"])
+    if metrics["oldest_mtime"] is not None:
+        old_time = datetime.datetime.fromtimestamp(metrics["oldest_mtime"]).strftime("%Y-%m-%d %H:%M:%S")
+        oldest = f"{metrics['oldest_file']} ({old_time})"
+    else:
+        oldest = "N/A"
+    if metrics["largest_file"] != "N/A":
+        large_hr = human_readable_size(metrics["largest_size"])
+        largest = f"{metrics['largest_file']} ({large_hr})"
+    else:
+        largest = "N/A"
+
+    # Summary table rows
+    summary_rows = "".join(f"""
+      <tr><td class="px-2 py-1">{k}</td><td class="px-2 py-1">{v}</td></tr>
+    """ for k, v in [
+        ("Generated On", now),
+        ("Folders", metrics["folder_count"]),
+        ("Files", metrics["file_count"]),
+        ("Total Size", total_hr),
+        ("Oldest File", oldest),
+        ("Largest File", largest)
+    ])
+
+    # Extension table rows
+    ext_rows = "".join(f"""
+      <tr><td class="px-2 py-1">{html.escape(ext or "(no ext)")}</td>
+          <td class="px-2 py-1">{html.escape(describe_extension(ext))}</td>
+          <td class="px-2 py-1">{count}</td></tr>
+    """ for ext, count in sorted(metrics["ext_counts"].items()))
+
+    dir_list_html = build_dir_list(root)
+
+    html_content = f"""<!DOCTYPE html>
+<html lang="en" data-theme="retro">
+<head>
+  <meta charset="UTF-8"/>
+  <title>{html.escape(PAGE_TITLE)}</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@latest" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@latest"></script>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@latest/themes.css" rel="stylesheet"/>
+  <style>
+    body{{padding:2.5rem;background:var(--base-200);color:var(--base-content)}}
+    h1{{font-size:1.875rem;font-weight:bold;margin-bottom:0.5rem;color:var(--primary)}}
+    table{{border-collapse:collapse;margin-bottom:1rem}}
+    th,td{{border:1px solid var(--primary-content);padding:0.25rem 0.5rem;text-align:left}}
+    .menu li a{{display:block;padding:0.25rem 0.5rem}}
+    .menu details summary{{padding:0.25rem 0.5rem;cursor:pointer}}
+  </style>
+</head>
+<body>
+  <div class="container mx-auto">
+    <h1>{html.escape(PAGE_TITLE)}</h1>
+    <table id="summary-table" class="w-fit table-auto border border-primary-content">
+      <tr><th class="px-2 py-1">Metric</th><th class="px-2 py-1">Value</th></tr>
+      {summary_rows}
+    </table>
+    <table id="ext-table" class="w-fit table-auto border border-primary-content">
+      <tr><th class="px-2 py-1">Extension</th><th class="px-2 py-1">Type</th><th class="px-2 py-1">Count</th></tr>
+      {ext_rows}
+    </table>
+    {dir_list_html}
+  </div>
+</body>
+</html>
+"""
+    with open(OUTPUT_FILENAME, "w", encoding="utf-8") as f:
+        f.write(html_content)
+    print(f"Directory listing written to: {OUTPUT_FILENAME}")
+
+if __name__ == "__main__":
+    mimetypes.init()
+    main()
+
+```
