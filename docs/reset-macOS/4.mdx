@@ -4,14 +4,19 @@ desc: How to install stuff using shell
 icon: '4'
 ---
 
+## open terminal
+
+- spotlight search for `terminal`
+
 ## 1. create folders & files
 
 ```bash
 mkdir -p ~/Developer
-mkdir -p ~/Developer/shell
-cd ~/Developer/shell
+mkdir -p ~/Developer/init-macOS
+cd ~/Developer/init-macOS
 touch dir-list.sh
-nano dir-list.sh
+# nano dir-list.sh
+open dir-list.sh
 ```
 
 ```bash
@@ -79,17 +84,40 @@ NC='\033[0m'               # No Color / reset sequence
 echo -e "${BLUE}ETA: ~15 sec.${NC}"
 
 # —————————————————————————————————————————————————————————————
-# 3. COMPUTE TOTAL NUMBER OF FOLDERS & FILES IN A SINGLE PASS (FASTER)
-#    Traverse once using `find . -print0` and a while loop to count.
-total_folders=0
-total_files=0
-while IFS= read -r -d '' entry; do
-  if [[ -d "$entry" ]]; then
-    ((total_folders++))
-  elif [[ -f "$entry" ]]; then
-    ((total_files++))
-  fi
-done < <(find . -print0 2>/dev/null)
+# 3. COMPUTE TOTAL NUMBER OF FOLDERS & FILES (using two find commands)
+# —————————————————————————————————————————————————————————————
+# Ignore patterns: node_modules, .git, .venv, __pycache__, .DS_Store
+total_folders=$(
+  find . \
+    \( -path "./node_modules" -o -path "*/node_modules" -o -path "./.git" -o -path "*/.git" -o -path "./.venv" -o -path "*/.venv" -o -path "*/__pycache__" -o -name ".DS_Store" \) -prune \
+    -o -type d -print \
+  | wc -l
+)
+total_files=$(
+  find . \
+    \( -path "./node_modules" -o -path "*/node_modules" -o -path "./.git" -o -path "*/.git" -o -path "./.venv" -o -path "*/.venv" -o -path "*/__pycache__" -o -name ".DS_Store" \) -prune \
+    -o -type f -print \
+  | wc -l
+)
+
+# —————————————————————————————————————————————————————————————
+# 3a. COMPUTE ADDITIONAL STATISTICS: created timestamp, directory size, largest file
+# —————————————————————————————————————————————————————————————
+created_on="$(date '+%Y-%m-%d %H:%M:%S')"
+dir_full_path="$PWD"
+# Compute total size of this directory (human-readable)
+total_size="$(du -sh "$dir_full_path" 2>/dev/null | awk '{print $1}')"
+# Find largest file (ignoring pruned patterns)
+largest_info="$(
+  find . \
+    \( -path "./node_modules" -o -path "*/node_modules" -o -path "./.git" -o -path "*/.git" -o -path "./.venv" -o -path "*/.venv" -o -path "*/__pycache__" -o -name ".DS_Store" \) -prune \
+    -o -type f -print0 \
+  | xargs -0 du 2>/dev/null \
+  | sort -n \
+  | tail -1
+)"
+largest_file_size="$(echo "$largest_info" | awk '{print $1}')"
+largest_file_path="$(echo "$largest_info" | awk '{print $2}')"
 
 # —————————————————————————————————————————————————————————————
 # 4. EXTRACT BASE DIRECTORY NAME
@@ -133,15 +161,19 @@ fi
 #    • FOLDERS ONLY: immediate subdirectories at maxdepth 1
 # —————————————————————————————————————————————————————————————
 {
-  echo "──────────────────────────────────────────────────────────"
-  echo "   STATISTICS FOR '$dir_name'"
-  echo "──────────────────────────────────────────────────────────"
-  echo "Total folders: $total_folders"
-  echo "Total files:   $total_files"
+  echo "╭────────────────────────────────────────────────────────╮"
+  echo "|  STATISTICS FOR '$dir_name'                            |"
+  echo "╰────────────────────────────────────────────────────────╯"
+  echo "  Created on:      $created_on"
+  echo "  Directory path:  $dir_full_path"
+  echo "  Total size:      $total_size"
+  echo "  Largest file:    $largest_file_size  $largest_file_path"
+  echo "  Total folders:   $total_folders"
+  echo "  Total files:     $total_files"
   echo ""
-  echo "──────────────────────────────────────────────────────────"
-  echo "   FOLDERS IN '$dir_name' (Immediate Subdirectories)"
-  echo "──────────────────────────────────────────────────────────"
+  echo "╭────────────────────────────────────────────────────────╮"
+  echo "|  FOLDERS IN '$dir_name' (Immediate Subdirectories)     |"
+  echo "╰────────────────────────────────────────────────────────╯"
   # List of folders (strip leading "./"; exclude "." itself)
   find . -maxdepth 1 -type d \
     | sed 's|^\./||' \
@@ -159,10 +191,25 @@ fi
 #    • Full recursive list (files + folders, including hidden)
 # —————————————————————————————————————————————————————————————
 {
-  echo "──────────────────────────────────────────────────────────"
-  echo "   FULL RECURSIVE LISTING OF '$dir_name'"
-  echo "──────────────────────────────────────────────────────────"
-  find . -mindepth 1 | sort
+  echo "╭────────────────────────────────────────────────────────╮"
+  echo "|  FULL RECURSIVE LISTING OF '$dir_name'                 |"
+  echo "╰────────────────────────────────────────────────────────╯"
+  find . \
+    \( -path "./node_modules" -o -path "*/node_modules" -o -path "./.git" -o -path "*/.git" -o -path "./.venv" -o -path "*/.venv" -o -path "*/__pycache__" -o -name ".DS_Store" \) -prune \
+    -o -mindepth 1 -print \
+  | sed 's|^\./||' \
+  | sort \
+  | awk -F'/' '
+    {
+      root = $1
+      if (root != prev) {
+        if (prev != "") print "────────────────────────────────────────────────────────────────────"
+        prev = root
+      }
+      indent = (NF-1)*4
+      printf "%*s%s\n", indent, "", $0
+    }
+  '
 } >> "$full_path" || {
   echo -e "${RED}Error: Could not append 'RECURSIVE LISTING' to '$full_path'.${NC}" >&2
   exit 1
@@ -172,11 +219,13 @@ fi
 # 10. FINAL CONFIRMATION: Print “Saved snapshot to:” in GREEN
 # —————————————————————————————————————————————————————————————
 echo -e "${GREEN}Saved snapshot to: $full_path${NC}"
+
 ```
 
 ## 2. run the script
 
 ```bash
+cd ~/Developer/init-macOS
 chmod +x dir-list.sh
 ./dir-list.sh
 ```

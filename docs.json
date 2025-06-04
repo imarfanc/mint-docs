@@ -21,7 +21,9 @@
               "docs/reset-macOS/1",
               "docs/reset-macOS/2",
               "docs/reset-macOS/3",
-              "docs/reset-macOS/4"
+              "docs/reset-macOS/4",
+              "docs/reset-macOS/5",
+              "docs/reset-macOS/6"
             ]
           },
           {
@@ -30,8 +32,7 @@
             "pages": [
               "docs/reset-macOS-draft1/1-1",
               "docs/reset-macOS-draft1/1.2",
-              "docs/reset-macOS-draft1/3",
-              "docs/reset-macOS-draft1/py-test"
+              "docs/reset-macOS-draft1/3"
             ]
           },
           {
